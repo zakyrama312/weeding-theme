@@ -76,7 +76,7 @@
   #envelope{
     position:fixed; top:0; bottom:0; right:0; width:100%; z-index:50;
     background:var(--cream);
-    display:flex; align-items:center; justify-content:center;
+    overflow-y:auto; overflow-x:hidden;
   }
   @media(min-width:1024px){ #envelope{ width:420px; } }
   #envelope.closed-hide{display:none;}
@@ -95,11 +95,6 @@
   .banner-strip{width:100%; max-width:280px; opacity:0.95;}
   @media(min-width:768px){ .banner-strip{max-width:380px;} }
 
-  /* photo frame: couple photo circle with a floral halo behind it, centered, tilted slightly left */
-  .photo-frame{position:relative; width:280px; height:auto; margin:0 auto; display:flex; flex-direction:column; align-items:center; justify-content:center;}
-  .photo-frame .corner-bottom{width:220px; height:auto; object-fit:contain; opacity:0.95; margin-top:-60px; position:relative; z-index:10; animation:cornerZoom 4s ease-in-out infinite;}
-  .photo-frame .photo-ring{position:relative; width:260px; height:320px; border-radius:130px 130px 16px 16px; border:3px solid #fff; box-shadow:0 8px 24px rgba(31,58,95,0.18), 0 0 0 1px var(--blue-soft); overflow:hidden; background:var(--blue-soft)/40; z-index:2;}
-  .photo-frame .photo-ring img{width:100%; height:100%; object-fit:cover;}
 
   @keyframes cornerZoom{
     0%,100%{ transform:scale(1); }
@@ -176,32 +171,31 @@
 
 <!-- ================= ENVELOPE / COVER ================= -->
 <div id="envelope">
-  <div class="relative max-w-md w-full mx-6">
-    <div class="corner-wrap corner-tl"><img src="assets/corner1.png" alt="" class="corner-img"></div>
-    <div class="corner-wrap corner-br"><img src="assets/corner1.png" alt="" class="corner-img"></div>
+  <div class="min-h-full w-full flex flex-col items-center justify-center py-8 px-4">
+    <div class="relative w-full max-w-sm">
+      <div class="corner-wrap corner-tl"><img src="assets/corner1.png" alt="" class="corner-img"></div>
+      <div class="corner-wrap corner-br"><img src="assets/corner1.png" alt="" class="corner-img"></div>
 
-    <div class="glass-panel w-full text-center py-16 px-6">
-      <p class="font-serif tracking-[0.35em] text-xs text-[var(--blue)] uppercase mb-5">The Wedding Of</p>
+      <div class="glass-panel w-full text-center py-10 px-4">
+        <p class="font-serif tracking-[0.35em] text-[11px] font-semibold text-[var(--ink)] uppercase mb-6">The Wedding Of</p>
 
-      <div class="photo-frame">
-        <div class="photo-ring">
-         <!-- ganti div ini dengan  -->
-           <img src="pasangan.jpeg" alt="Foto Pasangan"> 
-           <!-- untuk foto asli  -->
-          <div class="w-full h-full flex items-center justify-center text-[10px] text-[var(--ink)]/40 text-center px-4">Foto Pasangan</div>
+        <div class="relative w-56 mx-auto mb-5">
+          <div class="w-56 h-72 mx-auto rounded-t-full rounded-b-xl border-[3px] border-white shadow-sm overflow-hidden z-0 relative">
+             <img src="pasangan.jpeg" alt="Foto Pasangan" class="w-full h-full object-cover"> 
+          </div>
+          <img src="assets/corner2.png" alt="" class="absolute -bottom-8 left-1/2 -translate-x-1/2 w-52 object-contain z-10 drop-shadow-sm" style="animation:cornerZoom 4s ease-in-out infinite;">
         </div>
-        <img src="assets/corner2.png" alt="" class="corner-bottom">
+
+        <h1 class="font-script text-6xl leading-none mt-10 mb-4" style="color:var(--ink)">Ayu &amp; Bagas</h1>
+        
+        <p class="font-serif text-sm text-[var(--ink)]/80 mb-1">Kepada Yth. Bapak/Ibu/Saudara/i</p>
+        <p id="guestName" class="font-serif text-2xl font-semibold mb-1">Tamu Undangan</p>
+        <p class="text-[10px] text-[var(--ink)]/60 mb-6 italic">*Mohon maaf jika ada kesalahan penulisan nama/gelar</p>
+
+        <button id="openBtn" class="btn-primary font-serif tracking-widest text-[13px] uppercase px-8 py-3 rounded-full shadow-lg mx-auto flex items-center justify-center gap-2">
+          Buka Undangan
+        </button>
       </div>
-
-      <h1 class="font-script text-7xl leading-none mt-6" style="color:var(--ink)">Ayu &amp; Bagas</h1>
-      <div class="divider-line w-24 mx-auto my-6"></div>
-      <p class="font-serif text-sm text-[var(--ink)]/70 mb-1">Kepada Yth. Bapak/Ibu/Saudara/i</p>
-      <p id="guestName" class="font-serif text-xl italic mb-1">Tamu Undangan</p>
-      <p class="text-[11px] text-[var(--ink)]/50 mb-8">*Mohon maaf apabila ada kesalahan penulisan nama/gelar</p>
-
-      <button id="openBtn" class="btn-primary font-serif tracking-widest text-sm uppercase px-8 py-3 rounded-full">
-        Buka Undangan
-      </button>
     </div>
   </div>
 </div>
@@ -254,21 +248,20 @@
     <div class="corner-wrap corner-tr"><img src="assets/corner1.png" alt="" class="corner-img"></div>
     <div class="corner-wrap corner-bl"><img src="assets/corner1.png" alt="" class="corner-img"></div>
     
-    <div class="glass-panel w-full max-w-md mx-auto text-center px-6 py-16">
-      <p class="font-serif tracking-[0.4em] text-xs uppercase text-[var(--blue)] mb-6 reveal">The Wedding Of</p>
+    <div class="glass-panel w-full max-w-sm mx-auto text-center px-4 py-10">
+      <p class="font-serif tracking-[0.35em] text-[11px] font-semibold uppercase text-[var(--ink)] mb-6 reveal">The Wedding Of</p>
 
-      <div class="photo-frame mb-6 reveal">
-        <div class="photo-ring">
-          <!-- ganti div ini dengan <img src="foto-pasangan.jpg"> untuk foto asli -->
-          <div class="w-full h-full flex items-center justify-center text-[10px] text-[var(--ink)]/40 text-center px-4">Foto Pasangan</div>
+      <div class="relative w-56 mx-auto mb-5 reveal">
+        <div class="w-56 h-72 mx-auto rounded-t-full rounded-b-xl border-[3px] border-white shadow-sm overflow-hidden z-0 relative">
+          <img src="pasangan.jpeg" alt="Foto Pasangan" class="w-full h-full object-cover"> 
         </div>
-        <img src="assets/corner2.png" alt="" class="corner-bottom">
+        <img src="assets/corner2.png" alt="" class="absolute -bottom-8 left-1/2 -translate-x-1/2 w-52 object-contain z-10 drop-shadow-sm" style="animation:cornerZoom 4s ease-in-out infinite;">
       </div>
 
-      <h1 class="font-script text-7xl md:text-8xl mb-4 reveal" style="color:var(--ink)">Ayu &amp; Bagas</h1>
-      <p class="font-serif text-lg text-[var(--ink)]/80 reveal">Kamis, 04 Juni 2026</p>
-      <div class="divider-line w-32 mx-auto my-8 reveal"></div>
-      <p class="font-serif text-sm text-[var(--ink)]/60 reveal">Dengan penuh syukur, kami mengundang Bapak/Ibu/Saudara/i untuk hadir merayakan hari bahagia kami</p>
+      <h1 class="font-script text-6xl mt-10 mb-2 reveal" style="color:var(--ink)">Ayu &amp; Bagas</h1>
+      <p class="font-serif text-lg text-[var(--ink)]/80 reveal mb-6">Kamis, 04 Juni 2026</p>
+      
+      <p class="font-serif text-[13px] text-[var(--ink)]/70 reveal px-2">Dengan penuh syukur, kami mengundang Bapak/Ibu/Saudara/i untuk hadir merayakan hari bahagia kami</p>
     </div>
   </section>
 
