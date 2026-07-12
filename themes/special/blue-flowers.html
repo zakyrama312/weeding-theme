@@ -9,23 +9,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink: #4E342E;
-    --blue: #8D6E63;
-    --blue-soft: #D7CCC8;
-    --cream: #F5F5DC;
-    --gold: #C7A662;
-    --sage: #8CA089;
+    --ink:#1F3A5F;
+    --blue:#5F84A8;
+    --blue-soft:#B9CFE1;
+    --cream:#FAF7F1;
+    --gold:#C7A662;
+    --sage:#8CA089;
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   body{
     font-family:'Jost', sans-serif;
-    background-color: var(--cream);
-    background-image: url('../assets/ornaments/wayang/texture.png');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-blend-mode: multiply;
+    background:var(--cream);
     color:var(--ink);
     overflow-x:hidden;
     padding-bottom:100px;
@@ -80,7 +75,7 @@
 
   #envelope{
     position:fixed; top:0; bottom:0; right:0; width:100%; z-index:50;
-    background:transparent;
+    background:var(--cream);
     overflow-y:auto;
     overflow-x:hidden;
   }
@@ -103,7 +98,8 @@
 
   /* photo frame: couple photo circle with a floral halo behind it, centered, tilted slightly left */
   .photo-frame{position:relative; width:100%; max-width:260px; height:auto; margin:0 auto; display:flex; flex-direction:column; align-items:center; justify-content:center;}
-  .photo-frame .photo-ring{position:relative; width:240px; height:240px; border-radius:50%; border:3px solid #fff; box-shadow:0 8px 24px rgba(31,58,95,0.18), 0 0 0 1px var(--blue-soft); overflow:hidden; background:var(--blue-soft)/40; z-index:2;}
+  .photo-frame .corner-bottom{width:180px; height:auto; object-fit:contain; opacity:0.95; margin-top:-45px; position:relative; z-index:10; animation:cornerZoom 4s ease-in-out infinite;}
+  .photo-frame .photo-ring{position:relative; width:220px; height:280px; border-radius:110px 110px 12px 12px; border:3px solid #fff; box-shadow:0 8px 24px rgba(31,58,95,0.18), 0 0 0 1px var(--blue-soft); overflow:hidden; background:var(--blue-soft)/40; z-index:2;}
   .photo-frame .photo-ring img{width:100%; height:100%; object-fit:cover;}
 
   @keyframes cornerZoom{
@@ -145,64 +141,18 @@
   .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
   input:focus, select:focus, textarea:focus{outline:none; border-color:var(--blue);}
-
-  /* Parallax Floating Clouds */
-  .cloud-container {
-    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-    pointer-events: none; z-index: 1; overflow: hidden;
-  }
-  .cloud {
-    position: absolute;
-    background-image: url('../assets/ornaments/wayang/awan.png');
-    background-size: contain; background-repeat: no-repeat;
-    opacity: 0.6; /* Increased opacity to make it visible */
-  }
-  .cloud-1 {
-    width: 350px; height: 180px; top: 5%; left: -350px;
-    animation: floatCloud 50s linear infinite;
-  }
-  .cloud-2 {
-    width: 250px; height: 130px; top: 35%; left: -250px;
-    animation: floatCloud 40s linear infinite; animation-delay: -15s; opacity: 0.4;
-  }
-  .cloud-3 {
-    width: 450px; height: 230px; bottom: 15%; left: -450px;
-    animation: floatCloud 65s linear infinite; animation-delay: -35s; opacity: 0.5;
-  }
-  .cloud-4 {
-    width: 280px; height: 140px; bottom: -20px; left: -280px;
-    animation: floatCloud 45s linear infinite; animation-delay: -8s; opacity: 0.45;
-  }
-  @keyframes floatCloud {
-    from { transform: translateX(0) translateY(0); }
-    to { transform: translateX(150vw) translateY(-20px); }
-  }
-  @media(min-width: 1024px) {
-    .cloud-1 { width: 700px; height: 360px; left: -700px; }
-    .cloud-2 { width: 500px; height: 260px; left: -500px; }
-    .cloud-3 { width: 900px; height: 460px; left: -900px; }
-    .cloud-4 { width: 600px; height: 300px; left: -600px; }
-  }
 </style>
 </head>
 <body class="antialiased">
 
-<!-- Parallax Clouds Background -->
-<div class="cloud-container">
-  <div class="cloud cloud-1"></div>
-  <div class="cloud cloud-2"></div>
-  <div class="cloud cloud-3"></div>
-  <div class="cloud cloud-4"></div>
-</div>
-
 <!-- DESKTOP LEFT SIDE (Fixed) -->
-<div class="hidden lg:flex fixed inset-y-0 left-0 right-[420px] flex-col items-center justify-center bg-transparent overflow-hidden border-r border-[var(--blue-soft)]/30">
+<div class="hidden lg:flex fixed inset-y-0 left-0 right-[420px] flex-col items-center justify-center bg-[var(--cream)] overflow-hidden border-r border-[var(--blue-soft)]/30">
   
   <!-- Ornaments Desktop -->
-  <div class="absolute top-[-40px] left-[-40px] w-96 opacity-80 pointer-events-none" style="transform: scale(-1,-1);"><img src="../assets/ornaments/wayang/15.png" class="w-full anim-pulse"></div>
-  <div class="absolute top-[-40px] right-[-40px] w-96 opacity-80 pointer-events-none" style="transform: rotate(-90deg);"><img src="../assets/ornaments/wayang/15.png" class="w-full anim-pulse-delay"></div>
-  <div class="absolute bottom-[-40px] left-[-40px] w-96 opacity-80 pointer-events-none" style="transform: scaleX(-1);"><img src="../assets/ornaments/wayang/15.png" class="w-full anim-pulse-delay"></div>
-  <div class="absolute bottom-[-40px] right-[-40px] w-96 opacity-80 pointer-events-none" style="transform: scaleY(-1) rotate(-90deg);"><img src="../assets/ornaments/wayang/15.png" class="w-full anim-pulse"></div>
+  <div class="absolute top-[-40px] left-[-40px] w-96 opacity-80 pointer-events-none" style="transform: scale(-1,-1);"><img src="../../assets/corner1.png" class="w-full anim-pulse"></div>
+  <div class="absolute top-[-40px] right-[-40px] w-96 opacity-80 pointer-events-none" style="transform: rotate(-90deg);"><img src="../../assets/corner1.png" class="w-full anim-pulse-delay"></div>
+  <div class="absolute bottom-[-40px] left-[-40px] w-96 opacity-80 pointer-events-none" style="transform: scaleX(-1);"><img src="../../assets/corner1.png" class="w-full anim-pulse-delay"></div>
+  <div class="absolute bottom-[-40px] right-[-40px] w-96 opacity-80 pointer-events-none" style="transform: scaleY(-1) rotate(-90deg);"><img src="../../assets/corner1.png" class="w-full anim-pulse"></div>
 
   <!-- Background subtle texture -->
   <div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image: radial-gradient(var(--ink) 1px, transparent 1px); background-size: 24px 24px;"></div>
@@ -220,7 +170,7 @@
 </div>
 
 <!-- MAIN APP CONTAINER (Scrollable) -->
-<div id="app-wrap" class="w-full lg:w-[420px] lg:ml-auto min-h-screen relative bg-transparent shadow-[-10px_0_30px_rgba(0,0,0,0.1)]">
+<div id="app-wrap" class="w-full lg:w-[420px] lg:ml-auto min-h-screen relative bg-[var(--cream)] shadow-[-10px_0_30px_rgba(0,0,0,0.1)]">
 
 <!-- floating petals -->
 <div id="petals" class="fixed inset-y-0 right-0 w-full lg:w-[420px] pointer-events-none z-40 hidden md:block overflow-hidden"></div>
@@ -229,8 +179,8 @@
 <div id="envelope">
   <div class="relative max-w-md w-full mx-auto min-h-full flex flex-col p-4">
     <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-      <div class="corner-wrap corner-tl"><img src="../assets/ornaments/wayang/15.png" alt="" class="corner-img"></div>
-      <div class="corner-wrap corner-br"><img src="../assets/ornaments/wayang/15.png" alt="" class="corner-img"></div>
+      <div class="corner-wrap corner-tl"><img src="../../assets/corner1.png" alt="" class="corner-img"></div>
+      <div class="corner-wrap corner-br"><img src="../../assets/corner1.png" alt="" class="corner-img"></div>
     </div>
 
     <div class="glass-panel w-full text-center py-10 px-4 my-auto relative z-10">
@@ -241,10 +191,11 @@
            <img src="../pasangan.jpeg" alt="Foto Pasangan"> 
           <div class="w-full h-full flex items-center justify-center text-[10px] text-[var(--ink)]/40 text-center px-4 hidden">Foto Pasangan</div>
         </div>
+        <img src="../../assets/corner2.png" alt="" class="corner-bottom">
       </div>
 
-      <h1 class="font-script text-6xl leading-none mt-2" style="color:var(--ink)">Ayu &amp; Bagas</h1>
-      <div class="divider-line w-20 mx-auto my-3"></div>
+      <h1 class="font-script text-6xl leading-none mt-4" style="color:var(--ink)">Ayu &amp; Bagas</h1>
+      <div class="divider-line w-20 mx-auto my-4"></div>
       <p class="font-serif text-xs text-[var(--ink)]/70 mb-1">Kepada Yth. Bapak/Ibu/Saudara/i</p>
       <p id="guestName" class="font-serif text-lg italic mb-1">Tamu Undangan</p>
       <p class="text-[10px] text-[var(--ink)]/50 mb-6">*Mohon maaf apabila ada kesalahan penulisan</p>
@@ -264,7 +215,7 @@
     <span id="audioIcon">&#9835;</span>
   </button>
   <audio id="bgAudio" loop>
-    <source src="../gamelan-jawa.mp3" type="audio/mpeg">
+    <source src="https://the.invisimple.id/wp-content/uploads/2024/10/Tiara-Andini-Arsy-Widianto-Lagu-Pernikahan-Kita.mp3" type="audio/mpeg">
   </audio>
 
   <!-- bottom icon navbar -->
@@ -301,22 +252,25 @@
 
   <!-- HERO -->
   <section id="hero" class="relative min-h-screen flex flex-col items-center justify-center px-4 py-20 overflow-hidden">
-    <div class="corner-wrap corner-tr"><img src="../assets/ornaments/wayang/15.png" alt="" class="corner-img"></div>
-    <div class="corner-wrap corner-bl"><img src="../assets/ornaments/wayang/15.png" alt="" class="corner-img"></div>
+    <div class="corner-wrap corner-tr"><img src="../../assets/corner1.png" alt="" class="corner-img"></div>
+    <div class="corner-wrap corner-bl"><img src="../../assets/corner1.png" alt="" class="corner-img"></div>
     
     <div class="glass-panel w-full max-w-md mx-auto text-center px-6 py-16">
       <p class="font-serif tracking-[0.4em] text-xs uppercase text-[var(--blue)] mb-6 reveal">The Wedding Of</p>
 
-      <div class="photo-frame mb-2 reveal">
+      <div class="photo-frame mb-6 reveal">
         <div class="photo-ring">
+          <!-- ganti div ini dengan  -->
           <img src="../pasangan.jpeg">
-          <div class="w-full h-full flex items-center justify-center text-[10px] text-[var(--ink)]/40 text-center px-4 hidden">Foto Pasangan</div>
+          <!-- untuk foto asli -->
+          <div class="w-full h-full flex items-center justify-center text-[10px] text-[var(--ink)]/40 text-center px-4">Foto Pasangan</div>
         </div>
+        <img src="../../assets/corner2.png" alt="" class="corner-bottom">
       </div>
 
-      <h1 class="font-script text-7xl md:text-8xl mt-2 mb-2 reveal" style="color:var(--ink)">Ayu &amp; Bagas</h1>
+      <h1 class="font-script text-7xl md:text-8xl mb-4 reveal" style="color:var(--ink)">Ayu &amp; Bagas</h1>
       <p class="font-serif text-lg text-[var(--ink)]/80 reveal">Kamis, 04 Juni 2026</p>
-      <img src="../assets/ornaments/wayang/14.png" alt="" class="w-48 mx-auto my-8 reveal opacity-80">
+      <div class="divider-line w-32 mx-auto my-8 reveal"></div>
       <p class="font-serif text-sm text-[var(--ink)]/60 reveal">Dengan penuh syukur, kami mengundang Bapak/Ibu/Saudara/i untuk hadir merayakan hari bahagia kami</p>
     </div>
   </section>
@@ -333,8 +287,8 @@
 
   <!-- MEMPELAI -->
   <section id="mempelai" class="relative px-4 py-16 overflow-hidden">
-    <div class="corner-wrap corner-tr"><img src="../assets/ornaments/wayang/15.png" alt="" class="corner-img"></div>
-    <div class="corner-wrap corner-bl"><img src="../assets/ornaments/wayang/15.png" alt="" class="corner-img"></div>
+    <div class="corner-wrap corner-tr"><img src="../../assets/corner1.png" alt="" class="corner-img"></div>
+    <div class="corner-wrap corner-bl"><img src="../../assets/corner1.png" alt="" class="corner-img"></div>
     
     <div class="glass-panel w-full max-w-md mx-auto text-center px-4 py-12">
       <p class="font-serif text-lg text-[var(--ink)] font-semibold mb-4 reveal">Assalamu'alaikum Warahmatullahi Wabarakatuh</p>
@@ -368,8 +322,8 @@
 
   <!-- ACARA -->
   <section id="acara" class="relative px-4 py-16 overflow-hidden">
-    <div class="corner-wrap corner-tl"><img src="../assets/ornaments/wayang/15.png" alt="" class="corner-img"></div>
-    <div class="corner-wrap corner-br"><img src="../assets/ornaments/wayang/15.png" alt="" class="corner-img"></div>
+    <div class="corner-wrap corner-tl"><img src="../../assets/corner1.png" alt="" class="corner-img"></div>
+    <div class="corner-wrap corner-br"><img src="../../assets/corner1.png" alt="" class="corner-img"></div>
     
     <div class="glass-panel w-full max-w-md mx-auto text-center px-6 py-16">
       <p class="font-serif tracking-[0.35em] text-xs uppercase text-[var(--blue)] mb-8 reveal">Save The Date</p>
@@ -417,7 +371,7 @@
 
   <!-- LOVE STORY -->
   <section id="lovestory" class="relative px-4 py-16 overflow-hidden">
-    <div class="corner-wrap corner-tr"><img src="../assets/ornaments/wayang/15.png" alt="" class="corner-img"></div>
+    <div class="corner-wrap corner-tr"><img src="../../assets/corner1.png" alt="" class="corner-img"></div>
     
     <div class="glass-panel w-full max-w-md mx-auto text-center px-6 py-16">
       <p class="font-serif tracking-[0.35em] text-xs uppercase text-[var(--blue)] mb-2 reveal">Our Journey</p>
@@ -458,8 +412,8 @@
 
   <!-- GALERI -->
   <section id="galeri" class="relative px-4 py-16 overflow-hidden">
-    <div class="corner-wrap corner-tl"><img src="../assets/ornaments/wayang/15.png" alt="" class="corner-img"></div>
-    <div class="corner-wrap corner-br"><img src="../assets/ornaments/wayang/15.png" alt="" class="corner-img"></div>
+    <div class="corner-wrap corner-tl"><img src="../../assets/corner1.png" alt="" class="corner-img"></div>
+    <div class="corner-wrap corner-br"><img src="../../assets/corner1.png" alt="" class="corner-img"></div>
     
     <div class="glass-panel w-full max-w-md mx-auto text-center p-4">
       <p class="font-serif tracking-[0.35em] text-xs uppercase text-[var(--blue)] mb-2 mt-8 reveal">Gallery</p>
@@ -500,7 +454,7 @@
 
   <!-- WEDDING GIFT -->
   <section id="kado" class="relative px-4 py-16 overflow-hidden">
-    <div class="corner-wrap corner-tr"><img src="../assets/ornaments/wayang/15.png" alt="" class="corner-img"></div>
+    <div class="corner-wrap corner-tr"><img src="../../assets/corner1.png" alt="" class="corner-img"></div>
     
     <div class="glass-panel w-full max-w-md mx-auto text-center px-6 py-16">
       <p class="font-serif tracking-[0.35em] text-xs uppercase text-[var(--blue)] mb-2 reveal">Wedding Gift</p>
@@ -527,8 +481,8 @@
 
   <!-- UCAPAN & RSVP -->
   <section id="ucapan" class="relative px-4 py-16 overflow-hidden">
-    <div class="corner-wrap corner-tl"><img src="../assets/ornaments/wayang/15.png" alt="" class="corner-img"></div>
-    <div class="corner-wrap corner-br"><img src="../assets/ornaments/wayang/15.png" alt="" class="corner-img"></div>
+    <div class="corner-wrap corner-tl"><img src="../../assets/corner1.png" alt="" class="corner-img"></div>
+    <div class="corner-wrap corner-br"><img src="../../assets/corner1.png" alt="" class="corner-img"></div>
     
     <div class="glass-panel w-full max-w-md mx-auto text-center px-6 py-16">
       <p class="font-serif tracking-[0.35em] text-xs uppercase text-[var(--blue)] mb-2 reveal">RSVP</p>
@@ -643,8 +597,8 @@
 
   <!-- CLOSING -->
   <section class="relative px-4 py-16 overflow-hidden">
-    <div class="corner-wrap corner-tl"><img src="../assets/ornaments/wayang/15.png" alt="" class="corner-img"></div>
-    <div class="corner-wrap corner-tr"><img src="../assets/ornaments/wayang/15.png" alt="" class="corner-img"></div>
+    <div class="corner-wrap corner-tl"><img src="../../assets/corner1.png" alt="" class="corner-img"></div>
+    <div class="corner-wrap corner-tr"><img src="../../assets/corner1.png" alt="" class="corner-img"></div>
     
     <div class="glass-panel w-full max-w-md mx-auto text-center px-6 py-16">
       <p class="font-serif text-lg mx-auto text-[var(--ink)]/70 reveal">Merupakan suatu kebahagiaan dan kehormatan bagi kami, apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.</p>
@@ -766,7 +720,7 @@
       p.style.width = (10+Math.random()*14)+'px';
       p.style.animationDuration = (10+Math.random()*10)+'s';
       p.style.animationDelay = (Math.random()*10)+'s';
-      p.innerHTML = `<svg viewBox="0 0 24 24" fill="var(--gold)"><path d="M12 2c3 3 3 7 0 10-3-3-3-7 0-10z"/></svg>`;
+      p.innerHTML = `<svg viewBox="0 0 24 24" fill="#6C90B3"><path d="M12 2c3 3 3 7 0 10-3-3-3-7 0-10z"/></svg>`;
       container.appendChild(p);
     }
   }
