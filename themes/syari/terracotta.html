@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syar'i Terracotta - Wedding Theme</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Nunito:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        arabic: ['Amiri', 'serif'],
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Nunito', 'sans-serif'],
+                        cursive: ['Great Vibes', 'cursive'],
+                    },
+                    colors: {
+                        cream: '#F4EBE1',
+                        'cream-light': '#FBF8F4',
+                        brown: '#5E4134',
+                        'brown-light': '#8A6B5D',
+                        terracotta: '#B55D45',
+                        'terracotta-dark': '#8F4632',
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 30px rgba(94, 65, 52, 0.08)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #F4EBE1;
+            color: #5E4134;
+            overflow-x: hidden;
+        }
+        
+        /* Cover Screen */
+        #cover-screen {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            z-index: 100;
+            background: #B55D45; /* Terracotta background */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1), opacity 1.2s ease;
+        }
+        @media (min-width: 1024px) {
+            #cover-screen {
+                width: 420px;
+                left: auto;
+            }
+        }
+        #cover-screen.opened {
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Split Layout */
+        .layout-wrapper {
+            display: flex;
+            min-height: 100vh;
+        }
+        .desktop-fixed {
+            display: none;
+        }
+        .mobile-scroll {
+            width: 100%;
+            position: relative;
+        }
+        
+        @media (min-width: 1024px) {
+            .desktop-fixed {
+                display: flex;
+                position: fixed;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: calc(100% - 420px);
+                background-color: #B55D45;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+            }
+            .mobile-scroll {
+                margin-left: auto;
+                width: 420px;
+                background-color: #F4EBE1;
+                box-shadow: -20px 0 50px rgba(0,0,0,0.15);
+                z-index: 10;
+            }
+        }
+
+        /* Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* Bottom Nav */
+        .glass-nav {
+            background: rgba(251, 248, 244, 0.9);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-top: 1px solid rgba(181, 93, 69, 0.2);
+        }
+        
+        .rsvp-radio input:checked + div {
+            background-color: #B55D45;
+            color: #fff;
+            border-color: #B55D45;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(94, 65, 52, 0.05);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(181, 93, 69, 0.5);
+            border-radius: 10px;
+        }
+        
+        /* Mosque Clip Paths */
+        .clip-mosque-frame {
+            clip-path: url(#mosque-frame);
+        }
+        .clip-mosque-top {
+            clip-path: url(#mosque-top);
+        }
+        
+        /* SVG Background Pattern */
+        .islamic-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l30 30-30 30L0 30 30 0zm0 15L15 30l15 15 15-15-15-15z' fill='%23B55D45' fill-opacity='0.08' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+        
+    </style>
+</head>
+<body class="overflow-hidden">
+
+    <!-- SVG Clip Paths for Mosque Shapes -->
+    <svg width="0" height="0" class="absolute pointer-events-none" style="position: absolute; width: 0; height: 0;">
+        <defs>
+            <clipPath id="mosque-frame" clipPathUnits="objectBoundingBox">
+                <path d="M 0, 0.4 C 0, 0.15 0.35, 0.05 0.5, 0 C 0.65, 0.05 1, 0.15 1, 0.4 L 1, 0.9 C 1, 0.95 0.95, 1 0.9, 1 L 0.1, 1 C 0.05, 1 0, 0.95 0, 0.9 Z"></path>
+            </clipPath>
+            <clipPath id="mosque-top" clipPathUnits="objectBoundingBox">
+                <path d="M 0, 1 L 0, 0.5 C 0, 0.25 0.35, 0.1 0.5, 0 C 0.65, 0.1 1, 0.25 1, 0.5 L 1, 1 Z"></path>
+            </clipPath>
+        </defs>
+    </svg>
+
+    <!-- Cover Screen - Split Layout (As requested in latest screenshot) -->
+    <div id="cover-screen">
+        <div class="relative w-full h-full flex overflow-hidden lg:w-[420px] lg:mx-auto">
+            <!-- Left Terracotta Bar -->
+            <div class="w-[85px] h-full bg-terracotta flex flex-col items-center pt-16 z-20 shrink-0 border-r border-terracotta-dark/20 relative">
+                <!-- Vertical Line -->
+                <div class="w-[2px] h-24 bg-white/90 mb-8 rounded-full mx-auto"></div>
+                
+                <!-- Vertical Date -->
+                <div class="text-white font-serif text-2xl flex flex-col gap-3 items-center">
+                    <span class="tracking-widest">31</span>
+                    <span class="text-xs text-white/70">•</span>
+                    <span class="tracking-widest">12</span>
+                    <span class="text-xs text-white/70">•</span>
+                    <span class="tracking-widest">24</span>
+                </div>
+                
+                <!-- Bottom Left Floral Ornament -->
+                <div class="absolute -bottom-10 -left-6 w-48 h-48 pointer-events-none opacity-80" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cGF0aCBkPSJNOTAgOTBDODAgNjAgNTAgMzAgMTAgMTB2ODB6IiBmaWxsPSIjOEY0NjMyIiBvcGFjaXR5PSIwLjUiLz48Y2lyY2xlIGN4PSI0MCIgY3k9IjgwIiByPSIxNSIgZmlsbD0iI0Y0RUJFMSIgb3BhY2l0eT0iMC44Ii8+PHBhdGggZD0iTTUwIDkwYy0xMC0yMC01LTQwIDEwLTUwIDE1IDEwIDIwIDMwIDEwIDUweiIgZmlsbD0iI0Q0OEE2QyIvPjwvc3ZnPg=='); background-size: cover; background-position: bottom left;"></div>
+            </div>
+            
+            <!-- Right Cream Content Area with Arch Top Left -->
+            <div class="flex-1 h-full bg-cream rounded-tl-[120px] relative overflow-hidden flex flex-col pt-36 px-8 z-10 shadow-[-10px_0_30px_rgba(0,0,0,0.15)]">
+                
+                <!-- Background Character Illustration -->
+                <div class="absolute inset-0 opacity-40 pointer-events-none overflow-hidden z-0">
+                    <img src="../../assets/foto/syari_bride.png" class="w-full h-full object-cover object-bottom mix-blend-multiply" alt="Couple watermark">
+                </div>
+                
+                <div class="relative z-10 text-right w-full">
+                    <h2 class="font-cursive text-4xl text-brown mb-2 tracking-wide">Walimatul 'Urs</h2>
+                    <h1 class="font-serif text-[42px] text-terracotta leading-[1.1] mb-4">Elyana<br>& Syahril</h1>
+                    <p class="font-sans text-[11px] text-brown font-bold tracking-wider">Ahad, 31 Desember 2024</p>
+                </div>
+                
+                <div class="relative z-10 mt-auto mb-24 text-right w-full flex flex-col items-end">
+                    <p class="font-sans text-xs text-brown mb-2 font-bold">Kepada Yth:</p>
+                    <p class="font-serif text-xl text-brown border-b border-brown/30 inline-block pb-1 mb-8">Tamu Undangan</p>
+                    
+                    <button onclick="openInvitation()" class="group relative px-6 py-2.5 overflow-hidden rounded-md bg-[#D48A6C] hover:bg-terracotta text-white transition-all duration-300 shadow-md flex items-center justify-center gap-2">
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                        <span class="font-sans text-xs font-bold">Buka Undangan</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layout-wrapper">
+        <!-- Desktop Fixed Left (Same as Syari 1) -->
+        <div class="desktop-fixed overflow-hidden bg-terracotta">
+            <!-- Elegant Pattern Overlay (No repetitive character image) -->
+            <div class="absolute inset-0 islamic-pattern mix-blend-overlay opacity-60 pointer-events-none z-0"></div>
+            
+            <!-- Floral Corner SVG Ornaments -->
+            <div class="absolute bottom-0 left-0 w-[500px] h-[500px] pointer-events-none opacity-90 z-0" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjEwIDEwIDgwIDgwIj48cGF0aCBkPSJNOTAgOTBDODAgNjAgNTAgMzAgMTAgMTB2ODB6IiBmaWxsPSIjOEY0NjMyIiBvcGFjaXR5PSIwLjgiLz48Y2lyY2xlIGN4PSI0MCIgY3k9IjgwIiByPSIxNSIgZmlsbD0iI0Y0RUJFMSIgb3BhY2l0eT0iMC45Ii8+PHBhdGggZD0iTTUwIDkwYy0xMC0yMC01LTQwIDEwLTUwIDE1IDEwIDIwIDMwIDEwIDUweiIgZmlsbD0iI0Q0OEE2QyIvPjwvc3ZnPg=='); background-size: contain; background-repeat: no-repeat; background-position: bottom left;"></div>
+
+            <div class="text-center z-10 px-10 relative">
+                <div class="floating mb-10 text-white/80">
+                    <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mx-auto">
+                        <path d="M12 2C12 2 12 7.5 17.5 7.5C23 7.5 23 13 23 13C23 13 23 18.5 17.5 18.5C12 18.5 12 24 12 24C12 24 12 18.5 6.5 18.5C1 18.5 1 13 1 13C1 13 1 7.5 6.5 7.5C12 7.5 12 2 12 2Z" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <p class="font-sans text-sm tracking-[0.3em] text-cream/70 uppercase mb-6">Walimatul 'Ursy</p>
+                <h1 class="font-serif text-7xl text-white mb-6">Elyana <span class="italic text-cream/70">&</span> Syahril</h1>
+                <p class="font-sans text-cream/90 max-w-lg mx-auto leading-relaxed mt-8">
+                    "Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang."
+                    <br><br>
+                    <span class="font-semibold text-sm">(QS. Ar-Rum: 21)</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- Scrollable Right Content -->
+        <div class="mobile-scroll islamic-pattern">
+            
+            <!-- Hero Section -->
+            <section id="hero" class="relative min-h-[100svh] flex flex-col items-center justify-center py-20 px-6 text-center overflow-hidden bg-cream-light islamic-pattern">
+                
+                <div class="relative z-10 flex flex-col items-center justify-between h-full min-h-[80vh]">
+                    <div class="mt-10 reveal">
+                        <div class="floating mb-4 text-terracotta">
+                            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mx-auto">
+                                <path d="M12 2C12 2 12 7.5 17.5 7.5C23 7.5 23 13 23 13C23 13 23 18.5 17.5 18.5C12 18.5 12 24 12 24C12 24 12 18.5 6.5 18.5C1 18.5 1 13 1 13C1 13 1 7.5 6.5 7.5C12 7.5 12 2 12 2Z" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <div class="my-auto reveal" style="transition-delay: 200ms;">
+                        <h2 class="font-sans text-xs tracking-[0.2em] text-brown-light uppercase mb-6">Pernikahan Islami</h2>
+                        <h2 class="font-serif text-5xl md:text-6xl text-terracotta leading-tight">Elyana<br><span class="text-brown italic font-light text-4xl">&</span><br>Syahril</h2>
+                        
+                        <div class="flex items-center justify-center gap-4 text-brown-light font-sans text-sm font-bold tracking-[0.2em] mt-10">
+                            <span>31</span>
+                            <span class="w-1.5 h-1.5 rounded-full bg-terracotta"></span>
+                            <span>12</span>
+                            <span class="w-1.5 h-1.5 rounded-full bg-terracotta"></span>
+                            <span>2024</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-auto reveal" style="transition-delay: 400ms;">
+                        <div class="animate-bounce p-3 border border-terracotta/30 rounded-full text-terracotta bg-white/50 backdrop-blur-sm shadow-md">
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Couple Section -->
+            <section id="couple" class="py-20 px-6 relative bg-cream-light border-t border-b border-terracotta/10">
+                <div class="relative z-10 text-center mb-16 reveal">
+                    <h2 class="font-arabic text-3xl md:text-4xl text-terracotta mb-6 leading-relaxed">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</h2>
+                    <p class="font-sans font-semibold text-sm text-brown mb-2">Assalamu'alaikum Warahmatullahi Wabarakatuh</p>
+                    <p class="font-sans text-xs text-brown-light leading-relaxed max-w-sm mx-auto">Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Ya Allah semoga ridho-Mu tercurah mengiringi pernikahan kami:</p>
+                </div>
+
+                <!-- Bride -->
+                <div class="relative z-10 flex flex-col items-center text-center mb-12 reveal">
+                    <!-- Simple rounded frame for character -->
+                    <div class="relative z-10 drop-shadow-xl mb-6">
+                        <div class="w-[180px] h-[240px] rounded-t-full rounded-b-3xl bg-terracotta p-[6px] mx-auto shadow-lg">
+                            <div class="w-full h-full rounded-t-full rounded-b-3xl overflow-hidden bg-cream flex items-center justify-center relative">
+                                <img src="../../assets/foto/syari_bride.png" class="w-full h-full object-cover" alt="Bride Illustration">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="font-serif text-3xl text-brown mt-4 mb-2">Elyana</h3>
+                    <p class="font-sans font-semibold text-terracotta text-lg mb-4">Elyana Azkiya Nur</p>
+                    <p class="font-sans text-xs text-brown-light leading-relaxed">Putri dari Bapak Nasrudin Hatta<br>& Ibu Elma Muna</p>
+                </div>
+
+                <div class="relative z-10 text-center font-serif italic text-4xl text-terracotta/60 mb-12 reveal">&</div>
+
+                <!-- Groom -->
+                <div class="relative z-10 flex flex-col items-center text-center reveal">
+                    <div class="relative z-10 drop-shadow-xl mb-6">
+                        <div class="w-[180px] h-[240px] rounded-t-full rounded-b-3xl bg-terracotta p-[6px] mx-auto shadow-lg">
+                            <div class="w-full h-full rounded-t-full rounded-b-3xl overflow-hidden bg-cream flex items-center justify-center relative">
+                                <img src="../../assets/foto/syari_groom.png" class="w-full h-full object-cover" alt="Groom Illustration">
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="font-serif text-3xl text-brown mt-4 mb-2">Syahril</h3>
+                    <p class="font-sans font-semibold text-terracotta text-lg mb-4">Syahril Rendra Backhtiar</p>
+                    <p class="font-sans text-xs text-brown-light leading-relaxed">Putra dari Bapak Sufian Jadin<br>& Ibu Ratih Kumala</p>
+                </div>
+            </section>
+
+            <!-- Events Section -->
+            <section id="events" class="py-24 px-6 relative bg-terracotta">
+                <div class="text-center mb-16 reveal relative z-10">
+                    <p class="font-sans text-[11px] tracking-[0.2em] text-cream uppercase mb-2">Rangkaian Acara</p>
+                    <h2 class="font-serif text-4xl text-white">Waktu & Tempat</h2>
+                </div>
+
+                <div class="space-y-8 relative z-10">
+                    <!-- Akad Nikah -->
+                    <div class="reveal mx-auto max-w-sm bg-cream rounded-t-[180px] rounded-b-3xl shadow-2xl border-[8px] border-white/40 p-8 text-center relative mt-4">
+                        <h3 class="font-serif text-xl tracking-widest text-terracotta font-bold mb-4 uppercase mt-12">Akad Nikah</h3>
+                        
+                        <p class="font-serif text-lg font-bold text-brown mb-2 uppercase">Ahad</p>
+                        
+                        <div class="flex items-center justify-center gap-4 my-4 text-brown">
+                            <div class="font-serif font-bold text-lg uppercase w-12 text-right">Des</div>
+                            <div class="w-px h-12 bg-brown/20"></div>
+                            <div class="text-6xl font-serif text-brown/40 font-light leading-none">31</div>
+                            <div class="w-px h-12 bg-brown/20"></div>
+                            <div class="font-serif font-bold text-lg w-12 text-left">2024</div>
+                        </div>
+                        
+                        <p class="font-sans text-[11px] font-bold text-brown mb-8 uppercase">08.00 WIB s.d 10.00 WIB</p>
+                        
+                        <div class="mb-8 flex flex-col items-center">
+                            <svg class="w-5 h-5 text-brown/40 mb-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                            <p class="font-sans font-bold text-xs text-brown uppercase tracking-wide">Auditorium Masjid Assalam</p>
+                            <p class="font-sans text-[10px] text-brown mt-1.5 leading-relaxed max-w-[250px]">Jalan Raya Bojongsari No.5, Gunung Putri, Citeureup, Bogor, Jawa Barat</p>
+                        </div>
+                        
+                        <a href="#" class="inline-flex items-center justify-center gap-2 bg-terracotta hover:bg-terracotta-dark text-white px-6 py-3 rounded-full font-sans text-xs font-semibold transition-colors w-full shadow-md">
+                            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                            Google Map
+                        </a>
+                    </div>
+
+                    <!-- Walimatul 'Urs -->
+                    <div class="reveal mx-auto max-w-sm bg-cream rounded-3xl shadow-2xl border-[8px] border-white/40 p-8 text-center relative mt-4">
+                        <h3 class="font-serif text-xl tracking-widest text-terracotta font-bold mb-4 uppercase mt-2">Walimatul 'Urs</h3>
+                        
+                        <p class="font-serif text-lg font-bold text-brown mb-2 uppercase">Ahad</p>
+                        
+                        <div class="flex items-center justify-center gap-4 my-4 text-brown">
+                            <div class="font-serif font-bold text-lg uppercase w-12 text-right">Des</div>
+                            <div class="w-px h-12 bg-brown/20"></div>
+                            <div class="text-6xl font-serif text-brown/40 font-light leading-none">31</div>
+                            <div class="w-px h-12 bg-brown/20"></div>
+                            <div class="font-serif font-bold text-lg w-12 text-left">2024</div>
+                        </div>
+                        
+                        <p class="font-sans text-[11px] font-bold text-brown mb-8 uppercase">10.00 WIB s.d 15.00 WIB</p>
+                        
+                        <div class="mb-8 flex flex-col items-center">
+                            <svg class="w-5 h-5 text-brown/40 mb-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                            <p class="font-sans font-bold text-xs text-brown uppercase tracking-wide">Auditorium Masjid Assalam</p>
+                            <p class="font-sans text-[10px] text-brown mt-1.5 leading-relaxed max-w-[250px]">Jalan Raya Bojongsari No.5, Gunung Putri, Citeureup, Bogor, Jawa Barat</p>
+                        </div>
+                        
+                        <a href="#" class="inline-flex items-center justify-center gap-2 bg-terracotta hover:bg-terracotta-dark text-white px-6 py-3 rounded-full font-sans text-xs font-semibold transition-colors w-full shadow-md">
+                            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                            Google Map
+                        </a>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Wedding Gift / Tanda Kasih Section -->
+            <section id="kado" class="py-24 px-6 relative bg-cream">
+                <div class="text-center mb-12 reveal">
+                    <h2 class="font-serif text-4xl text-brown mb-4">Tanda Kasih</h2>
+                    <p class="font-sans text-sm text-brown-light max-w-sm mx-auto leading-relaxed">Doa restu Anda adalah karunia paling berarti bagi kami. Namun jika ingin memberi tanda kasih, Anda dapat melalui rekening berikut:</p>
+                </div>
+
+                <div class="grid gap-6 max-w-sm mx-auto">
+                    <!-- Rekening 1 -->
+                    <div class="bg-white rounded-3xl p-6 shadow-soft text-center reveal border border-terracotta/10">
+                        <p class="font-sans font-bold tracking-widest text-[10px] uppercase text-terracotta mb-2">Bank Syariah Indonesia</p>
+                        <p class="font-serif text-2xl text-brown mb-1" id="rek1">1234567890</p>
+                        <p class="font-sans text-xs text-brown-light mb-4">a.n. Syahril</p>
+                        <button onclick="copyRek('rek1')" class="font-sans font-bold text-[10px] tracking-widest uppercase border-b border-brown text-brown pb-1 hover:text-terracotta hover:border-terracotta transition-colors">Salin Nomor</button>
+                    </div>
+
+                    <!-- Rekening 2 -->
+                    <div class="bg-white rounded-3xl p-6 shadow-soft text-center reveal border border-terracotta/10">
+                        <p class="font-sans font-bold tracking-widest text-[10px] uppercase text-terracotta mb-2">Bank Mandiri</p>
+                        <p class="font-serif text-2xl text-brown mb-1" id="rek2">0987654321</p>
+                        <p class="font-sans text-xs text-brown-light mb-4">a.n. Elyana</p>
+                        <button onclick="copyRek('rek2')" class="font-sans font-bold text-[10px] tracking-widest uppercase border-b border-brown text-brown pb-1 hover:text-terracotta hover:border-terracotta transition-colors">Salin Nomor</button>
+                    </div>
+                </div>
+                <p id="copyToast" class="text-xs text-center text-terracotta font-semibold mt-6 h-4 opacity-0 transition-opacity duration-300"></p>
+            </section>
+            
+            <!-- RSVP Section -->
+            <section id="rsvp" class="py-24 px-6 relative bg-cream-light border-t border-terracotta/20">
+                <div class="text-center mb-12 reveal">
+                    <h2 class="font-serif text-4xl text-brown mb-4">Buku Tamu</h2>
+                    <p class="font-sans text-sm text-brown-light">Kehadiran dan doa restu Bapak/Ibu/Saudara/i merupakan kehormatan bagi kami.</p>
+                </div>
+
+                <form onsubmit="submitRsvp(event)" class="space-y-5 reveal bg-white shadow-soft rounded-3xl p-6 md:p-8 border border-terracotta/10">
+                    <div>
+                        <label class="block font-sans text-xs font-bold text-brown mb-2">Nama Lengkap</label>
+                        <input type="text" required class="w-full bg-cream/30 border border-terracotta/20 rounded-xl px-4 py-3 text-brown font-sans text-sm focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta transition-all" placeholder="Masukkan nama Anda">
+                    </div>
+                    
+                    <div>
+                        <label class="block font-sans text-xs font-bold text-brown mb-3">Konfirmasi Kehadiran</label>
+                        <div class="flex gap-3">
+                            <label class="flex-1 rsvp-radio cursor-pointer">
+                                <input type="radio" name="attendance" value="Hadir" class="hidden" required>
+                                <div class="w-full py-2.5 rounded-xl text-center border border-terracotta/30 text-brown font-sans text-sm transition-all hover:bg-cream">Hadir</div>
+                            </label>
+                            <label class="flex-1 rsvp-radio cursor-pointer">
+                                <input type="radio" name="attendance" value="Tidak Hadir" class="hidden">
+                                <div class="w-full py-2.5 rounded-xl text-center border border-terracotta/30 text-brown font-sans text-sm transition-all hover:bg-cream">Tidak Hadir</div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block font-sans text-xs font-bold text-brown mb-2">Doa & Ucapan</label>
+                        <textarea required rows="4" class="w-full bg-cream/30 border border-terracotta/20 rounded-xl px-4 py-3 text-brown font-sans text-sm focus:outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta transition-all resize-none" placeholder="Tuliskan doa untuk kedua mempelai..."></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full bg-terracotta hover:bg-terracotta-dark text-white font-sans text-sm font-bold py-3.5 rounded-xl transition-colors shadow-md">Kirim Ucapan</button>
+                    <p id="rsvpNote" class="text-center font-sans text-[10px] text-brown/50 mt-3">*Form ini adalah simulasi tema.</p>
+                </form>
+                
+                <!-- Comment Feed -->
+                <div id="ucapanList" class="mt-10 space-y-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar reveal">
+                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-terracotta/10">
+                        <div class="flex items-center justify-between mb-2">
+                            <h4 class="font-sans font-bold text-brown">Keluarga Bapak H. Ahmad</h4>
+                            <span class="px-2.5 py-1 bg-terracotta/10 text-terracotta-dark rounded-lg text-[10px] font-bold tracking-wider">Hadir</span>
+                        </div>
+                        <p class="font-sans text-sm text-brown-light leading-relaxed">Barakallahu laka wa baarakaa alaika wa jamaa bainakumaa fii khoir. Selamat menempuh hidup baru Elyana dan Syahril.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="py-16 bg-brown text-center pb-32">
+                <div class="floating mb-6 text-terracotta">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mx-auto">
+                        <path d="M12 2C12 2 12 7.5 17.5 7.5C23 7.5 23 13 23 13C23 13 23 18.5 17.5 18.5C12 18.5 12 24 12 24C12 24 12 18.5 6.5 18.5C1 18.5 1 13 1 13C1 13 1 7.5 6.5 7.5C12 7.5 12 2 12 2Z" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h2 class="font-cursive text-4xl text-cream mb-2">Elyana & Syahril</h2>
+                <p class="font-sans text-sm text-cream/70 mb-8">Wassalamu'alaikum Warahmatullahi Wabarakatuh</p>
+                <p class="font-sans text-[10px] text-cream/50 tracking-widest uppercase">© 2026 Weeding Theme Builder</p>
+            </footer>
+
+            <!-- Bottom Navigation -->
+            <nav id="bottomNav" class="fixed bottom-0 left-0 w-full lg:w-[420px] lg:left-auto lg:right-0 glass-nav z-50 transform translate-y-full transition-transform duration-500 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] rounded-t-3xl border-x border-t border-terracotta/20">
+                <div class="flex justify-between items-center px-8 py-3 mb-1">
+                    <a href="#hero" class="text-brown-light hover:text-terracotta transition-colors flex flex-col items-center gap-1 w-12 nav-item">
+                        <svg class="w-5 h-5 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                        <span class="text-[9px] font-sans font-semibold">Home</span>
+                    </a>
+                    <a href="#couple" class="text-brown-light hover:text-terracotta transition-colors flex flex-col items-center gap-1 w-12 nav-item">
+                        <svg class="w-5 h-5 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                        <span class="text-[9px] font-sans font-semibold">Mempelai</span>
+                    </a>
+                    <a href="#events" class="text-brown-light hover:text-terracotta transition-colors flex flex-col items-center gap-1 w-12 nav-item">
+                        <svg class="w-5 h-5 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        <span class="text-[9px] font-sans font-semibold">Acara</span>
+                    </a>
+                    <a href="#rsvp" class="text-brown-light hover:text-terracotta transition-colors flex flex-col items-center gap-1 w-12 nav-item">
+                        <svg class="w-5 h-5 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                        <span class="text-[9px] font-sans font-semibold">Kehadiran</span>
+                    </a>
+                </div>
+            </nav>
+
+        </div>
+    </div>
+
+    <!-- Music Button -->
+    <button id="musicBtn" onclick="toggleMusic()" class="fixed top-6 right-6 lg:right-[445px] z-50 w-10 h-10 rounded-full bg-white/80 backdrop-blur shadow-md text-terracotta border border-terracotta/20 flex items-center justify-center opacity-0 pointer-events-none transition-all duration-1000 hover:bg-terracotta hover:text-white">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+    </button>
+
+    <script>
+        function openInvitation() {
+            document.getElementById('cover-screen').classList.add('opened');
+            document.body.classList.remove('overflow-hidden');
+            
+            setTimeout(() => {
+                document.getElementById('bottomNav').classList.remove('translate-y-full');
+                document.getElementById('musicBtn').classList.remove('opacity-0', 'pointer-events-none');
+            }, 800);
+            
+            // trigger hero animations
+            setTimeout(() => {
+                document.querySelectorAll('#hero .reveal').forEach(el => el.classList.add('active'));
+            }, 500);
+        }
+
+        function toggleMusic() {
+            const btn = document.getElementById('musicBtn');
+            btn.classList.toggle('bg-terracotta');
+            btn.classList.toggle('text-white');
+            btn.classList.toggle('bg-white/80');
+            btn.classList.toggle('text-terracotta');
+        }
+
+        // Intersection Observer for animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            if(!el.closest('#hero')) {
+                observer.observe(el);
+            }
+        });
+
+        // Scroll Spy for Nav
+        const sections = document.querySelectorAll('section');
+        const navItems = document.querySelectorAll('.nav-item');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 300) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navItems.forEach(item => {
+                item.classList.remove('text-terracotta');
+                item.classList.add('text-brown-light');
+                if (item.getAttribute('href').includes(current)) {
+                    item.classList.remove('text-brown-light');
+                    item.classList.add('text-terracotta');
+                }
+            });
+        });
+
+        // RSVP logic
+        function submitRsvp(e) {
+            e.preventDefault();
+            const form = e.target;
+            const name = form.querySelector('input[type="text"]').value;
+            const msg = form.querySelector('textarea').value;
+            const attend = form.querySelector('input[name="attendance"]:checked').value;
+            
+            const badgeClass = attend === 'Hadir' ? 'bg-terracotta/10 text-terracotta-dark' : 'bg-brown/10 text-brown-light';
+            
+            const item = document.createElement('div');
+            item.className = 'bg-white rounded-2xl p-5 shadow-sm border border-terracotta/10 reveal active';
+            item.innerHTML = `
+                <div class="flex items-center justify-between mb-2">
+                    <h4 class="font-sans font-bold text-brown">${name}</h4>
+                    <span class="px-2.5 py-1 ${badgeClass} rounded-lg text-[10px] font-bold tracking-wider">${attend}</span>
+                </div>
+                <p class="font-sans text-sm text-brown-light leading-relaxed">${msg}</p>
+            `;
+            
+            const list = document.getElementById('ucapanList');
+            list.insertBefore(item, list.firstChild);
+            
+            document.getElementById('rsvpNote').textContent = 'Terima kasih atas doa & konfirmasinya!';
+            form.reset();
+            
+            setTimeout(() => {
+                document.getElementById('rsvpNote').textContent = '*Form ini adalah simulasi tema.';
+            }, 3000);
+        }
+
+        // Copy Rekening logic
+        function copyRek(id) {
+            const rekText = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(rekText).then(() => {
+                const toast = document.getElementById('copyToast');
+                toast.textContent = 'Nomor rekening berhasil disalin!';
+                toast.classList.remove('opacity-0');
+                setTimeout(() => {
+                    toast.classList.add('opacity-0');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
