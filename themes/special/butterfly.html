@@ -123,7 +123,7 @@
   .photo-frame{position:relative; width:100%; max-width:260px; height:auto; margin:0 auto; display:flex; flex-direction:column; align-items:center; justify-content:center;}
   .photo-frame .corner-bottom{width:180px; height:auto; object-fit:contain; opacity:0.8; margin-top:-45px; position:relative; z-index:10; animation:cornerZoom 4s ease-in-out infinite; filter:hue-rotate(240deg) brightness(1.2) contrast(0.9);}
   .photo-frame .photo-ring{position:relative; width:220px; height:280px; border-radius:110px 110px 12px 12px; border:3px solid #fff; box-shadow:0 8px 24px rgba(74,44,89,0.18), 0 0 0 1px var(--primary-soft); overflow:hidden; background:var(--primary-soft)/40; z-index:2;}
-  .photo-frame .photo-ring img{width:100%; height:100%; object-fit:cover;}
+  .photo-frame .photo-ring img{width:100%; height:100%; object-fit:cover; object-position: top;}
 
   @keyframes cornerZoom{
     0%,100%{ transform:scale(1); }
@@ -206,7 +206,7 @@
 
       <div class="photo-frame">
         <div class="photo-ring">
-           <img src="../pasangan.jpeg" alt="Foto Pasangan"> 
+           <img src="../../assets/foto/pengantin_1.jpeg" alt="Foto Pasangan"> 
           <div class="w-full h-full flex items-center justify-center text-[10px] text-[var(--ink)]/40 text-center px-4 hidden">Foto Pasangan</div>
         </div>
         <img src="../../assets/corner2.png" alt="" class="corner-bottom">
@@ -234,7 +234,7 @@
   </button>
   <audio id="bgAudio" loop>
     <!-- Romantic song fitting a beautiful butterfly theme -->
-    <source src="https://the.invisimple.id/wp-content/uploads/2024/10/Tiara-Andini-Arsy-Widianto-Lagu-Pernikahan-Kita.mp3" type="audio/mpeg">
+    <source src="../../assets/music/weeding.mp3" type="audio/mpeg">
   </audio>
 
   <!-- bottom icon navbar -->
@@ -287,7 +287,7 @@
 
       <div class="photo-frame mb-6 reveal">
         <div class="photo-ring">
-          <img src="../pasangan.jpeg">
+          <img src="../../assets/foto/pengantin_2.jpeg">
           <div class="w-full h-full flex items-center justify-center text-[10px] text-[var(--ink)]/40 text-center px-4">Foto Pasangan</div>
         </div>
         <img src="../../assets/corner2.png" alt="" class="corner-bottom">
@@ -322,7 +322,7 @@
       <div class="flex flex-col gap-6 items-center">
         <div class="reveal">
           <div class="w-44 h-56 mx-auto rounded-t-full rounded-b-xl border-[3px] border-white shadow-sm flex items-center justify-center overflow-hidden relative">
-            <img src="../pasangan.jpeg" alt="Ayu Lestari" class="w-full h-full object-cover">
+            <img src="../../assets/foto/pengantin_cewe.jpeg" alt="Ayu Lestari" class="w-full h-full object-cover">
           </div>
           <h3 class="font-script text-5xl mt-5 mb-1" style="color:var(--ink)">Ayu Lestari</h3>
           <p class="font-serif text-sm font-semibold text-[var(--ink)] mb-0.5">Putri Pertama dari</p>
@@ -335,7 +335,7 @@
 
         <div class="reveal">
           <div class="w-44 h-56 mx-auto rounded-t-full rounded-b-xl border-[3px] border-white shadow-sm flex items-center justify-center overflow-hidden">
-            <img src="../pasangan.jpeg" alt="Bagas Pratama" class="w-full h-full object-cover">
+            <img src="../../assets/foto/pengantin_cowo.jpeg" alt="Bagas Pratama" class="w-full h-full object-cover">
           </div>
           <h3 class="font-script text-5xl mt-5 mb-1" style="color:var(--ink)">Bagas Pratama</h3>
           <p class="font-serif text-sm font-semibold text-[var(--ink)] mb-0.5">Putra Kedua dari</p>
@@ -454,7 +454,7 @@
       <div class="relative bg-white/50 p-2 rounded-2xl shadow-sm border border-white/50 mb-8 reveal">
         <!-- Main Image -->
         <div class="relative w-full aspect-[3/4] rounded-xl overflow-hidden mb-2">
-          <img id="mainGalleryImg" src="../pasangan.jpeg" alt="Gallery" class="w-full h-full object-cover">
+          <img id="mainGalleryImg" src="../../assets/foto/pengantin_1.jpeg" alt="Gallery" class="w-full h-full object-cover">
           
           <!-- Arrows -->
           <button onclick="prevGallery()" class="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center bg-black/20 text-white rounded-full backdrop-blur-sm hover:bg-black/40 transition">
@@ -467,12 +467,12 @@
 
         <!-- Thumbnails -->
         <div class="relative flex gap-2 overflow-x-auto py-1 px-1 snap-x hide-scrollbar" id="galleryThumbs">
-          <img src="../pasangan.jpeg" onclick="setGallery(0)" class="w-16 h-16 rounded-lg object-cover cursor-pointer snap-start border-2 border-[var(--primary)] shrink-0 transition-all">
-          <img src="../pasangan.jpeg" onclick="setGallery(1)" class="w-16 h-16 rounded-lg object-cover cursor-pointer snap-start opacity-60 shrink-0 transition-all hover:opacity-100">
-          <img src="../pasangan.jpeg" onclick="setGallery(2)" class="w-16 h-16 rounded-lg object-cover cursor-pointer snap-start opacity-60 shrink-0 transition-all hover:opacity-100">
-          <img src="../pasangan.jpeg" onclick="setGallery(3)" class="w-16 h-16 rounded-lg object-cover cursor-pointer snap-start opacity-60 shrink-0 transition-all hover:opacity-100">
-          <img src="../pasangan.jpeg" onclick="setGallery(4)" class="w-16 h-16 rounded-lg object-cover cursor-pointer snap-start opacity-60 shrink-0 transition-all hover:opacity-100">
-          <img src="../pasangan.jpeg" onclick="setGallery(5)" class="w-16 h-16 rounded-lg object-cover cursor-pointer snap-start opacity-60 shrink-0 transition-all hover:opacity-100">
+          <img src="../../assets/foto/pengantin_1.jpeg" onclick="setGallery(0)" class="w-16 h-16 rounded-lg object-cover cursor-pointer snap-start border-2 border-[var(--primary)] shrink-0 transition-all">
+          <img src="../../assets/foto/pengantin_2.jpeg" onclick="setGallery(1)" class="w-16 h-16 rounded-lg object-cover cursor-pointer snap-start opacity-60 shrink-0 transition-all hover:opacity-100">
+          <img src="../../assets/foto/pengantin_3.jpeg" onclick="setGallery(2)" class="w-16 h-16 rounded-lg object-cover cursor-pointer snap-start opacity-60 shrink-0 transition-all hover:opacity-100">
+          <img src="../../assets/foto/pengantin_1.jpeg" onclick="setGallery(3)" class="w-16 h-16 rounded-lg object-cover cursor-pointer snap-start opacity-60 shrink-0 transition-all hover:opacity-100">
+          <img src="../../assets/foto/pengantin_2.jpeg" onclick="setGallery(4)" class="w-16 h-16 rounded-lg object-cover cursor-pointer snap-start opacity-60 shrink-0 transition-all hover:opacity-100">
+          <img src="../../assets/foto/pengantin_3.jpeg" onclick="setGallery(5)" class="w-16 h-16 rounded-lg object-cover cursor-pointer snap-start opacity-60 shrink-0 transition-all hover:opacity-100">
         </div>
       </div>
     </div>
@@ -744,7 +744,7 @@
   });
 
   // ---------- gallery carousel ----------
-  const galleryImages = ['../pasangan.jpeg','../pasangan.jpeg','../pasangan.jpeg','../pasangan.jpeg','../pasangan.jpeg','../pasangan.jpeg'];
+  const galleryImages = ['../../assets/foto/pengantin_1.jpeg','../../assets/foto/pengantin_2.jpeg','../../assets/foto/pengantin_3.jpeg','../../assets/foto/pengantin_1.jpeg','../../assets/foto/pengantin_2.jpeg','../../assets/foto/pengantin_3.jpeg'];
   let currentGalIdx = 0;
   const mainImg = document.getElementById('mainGalleryImg');
   const thumbs = document.getElementById('galleryThumbs').children;
