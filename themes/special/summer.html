@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summer Romance - Luxury Theme</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #FFF9F2;
+            --bg-secondary: #FFF1E6;
+            --text-main: #4A4036;
+            --accent-coral: #F28482;
+            --accent-sage: #84A59D;
+            --accent-yellow: #F6BD60;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .font-script { font-family: 'Great Vibes', cursive; }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Cover Screen */
+        #cover-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background-color: var(--bg-primary);
+            background-image: radial-gradient(circle at top right, var(--bg-secondary) 0%, transparent 40%),
+                              radial-gradient(circle at bottom left, #F2848220 0%, transparent 40%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 1s cubic-bezier(0.7, 0, 0.3, 1), opacity 1s ease;
+        }
+
+        #cover-screen.opened {
+            transform: translateY(-100vh);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Glass Cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        /* Blob Background */
+        .blob {
+            position: absolute;
+            filter: blur(40px);
+            z-index: -1;
+            opacity: 0.6;
+        }
+
+        /* Mobile Layout */
+        .mobile-container {
+            max-w-md; mx-auto; min-h-screen; relative; bg-white; shadow-2xl; overflow-hidden;
+        }
+    </style>
+</head>
+<body class="overflow-hidden lg:bg-gray-100">
+
+    <!-- Cover Screen -->
+    <div id="cover-screen">
+        <div class="blob w-64 h-64 bg-[#F28482] rounded-full top-[-10%] right-[-10%]"></div>
+        <div class="blob w-72 h-72 bg-[#F6BD60] rounded-full bottom-[-10%] left-[-10%]"></div>
+        
+        <div class="text-center px-8 z-10 glass-card p-10 m-4 w-full max-w-sm border-2 border-white/50">
+            <p class="font-sans text-xs tracking-[0.3em] uppercase mb-4 text-[#84A59D] font-semibold">The Wedding Of</p>
+            <h1 class="font-script text-6xl md:text-7xl mb-2 text-[#F28482] animate-float">Olivia & Kevin</h1>
+            <p class="font-serif italic text-lg mb-8 text-[#4A4036]">31th December 2026</p>
+            
+            <div class="mb-8">
+                <p class="text-[10px] uppercase tracking-widest text-[#84A59D] mb-2">Dear,</p>
+                <p class="font-serif text-xl font-bold">Invited Guest</p>
+            </div>
+            
+            <button onclick="openInvitation()" class="bg-[#F28482] text-white px-8 py-3 rounded-full font-sans text-xs uppercase tracking-widest font-semibold hover:bg-[#E07A5F] hover:shadow-lg transition-all duration-300 w-full animate-bounce mt-4">
+                Open Invitation
+            </button>
+        </div>
+    </div>
+
+    <!-- Music Player (Hidden) -->
+    <audio id="bg-music" loop>
+        <source src="../../assets/music/Mitski-My-Love-Mine-All-Mine-Official-Lyric-Video.mp3" type="audio/mpeg">
+    </audio>
+
+    <button id="musicBtn" onclick="toggleMusic()" class="fixed top-6 right-6 lg:right-[calc(50%-180px)] z-50 w-10 h-10 rounded-full bg-[#F28482] text-white shadow-lg flex items-center justify-center opacity-0 pointer-events-none transition-all duration-500 hover:scale-110">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+    </button>
+
+    <!-- Main Container -->
+    <div class="max-w-md mx-auto bg-[#FFF9F2] min-h-screen relative shadow-2xl overflow-hidden border-x border-[#FFF1E6]">
+        
+        <!-- Background Decor -->
+        <div class="absolute top-0 right-0 w-64 h-64 bg-[#F28482]/10 rounded-bl-full z-0 pointer-events-none"></div>
+        <div class="absolute top-[20%] left-0 w-48 h-48 bg-[#F6BD60]/10 rounded-r-full z-0 pointer-events-none"></div>
+        <div class="absolute top-[60%] right-0 w-56 h-56 bg-[#84A59D]/10 rounded-l-full z-0 pointer-events-none"></div>
+
+        <!-- Hero Section -->
+        <header id="hero" class="relative z-10 pt-20 pb-16 px-6 text-center">
+            <p class="font-sans text-[9px] tracking-[0.4em] uppercase mb-4 text-[#84A59D] reveal font-semibold">We Are Tying The Knot</p>
+            <h2 class="font-script text-7xl text-[#F28482] mb-6 reveal delay-100 leading-tight">Olivia <br><span class="text-4xl text-[#F6BD60]">&</span><br> Kevin</h2>
+            
+            <div class="my-10 px-4 reveal delay-200">
+                <div class="glass-card p-2 rounded-t-[100px] rounded-b-[10px]">
+                    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=800&auto=format&fit=crop" alt="Couple" class="w-full h-80 object-cover rounded-t-[100px] rounded-b-[10px]">
+                </div>
+            </div>
+
+            <p class="font-serif italic text-[#4A4036] mb-2 reveal delay-300">"And one of His signs is that He created for you spouses from among yourselves..."</p>
+            <p class="font-sans text-[10px] text-[#84A59D] tracking-widest uppercase reveal delay-300">Q.S. Ar-Rum : 21</p>
+        </header>
+
+        <!-- The Couple Section -->
+        <section id="couple" class="relative z-10 py-16 px-6 text-center">
+            <h3 class="font-script text-5xl text-[#F6BD60] mb-12 reveal">The Bride & Groom</h3>
+            
+            <!-- Bride -->
+            <div class="mb-12 reveal">
+                <div class="w-32 h-32 mx-auto mb-4 p-1 rounded-full border-2 border-dashed border-[#F28482]">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400&auto=format&fit=crop" alt="Bride" class="w-full h-full object-cover rounded-full">
+                </div>
+                <h4 class="font-serif text-2xl font-bold text-[#4A4036]">Olivia Putri</h4>
+                <p class="text-xs mt-2 text-[#84A59D]">Daughter of Mr. Smith & Mrs. Jane</p>
+            </div>
+            
+            <div class="font-script text-4xl text-[#F28482] mb-12 reveal">&</div>
+            
+            <!-- Groom -->
+            <div class="reveal">
+                <div class="w-32 h-32 mx-auto mb-4 p-1 rounded-full border-2 border-dashed border-[#84A59D]">
+                    <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=400&auto=format&fit=crop" alt="Groom" class="w-full h-full object-cover rounded-full">
+                </div>
+                <h4 class="font-serif text-2xl font-bold text-[#4A4036]">Kevin Pratama</h4>
+                <p class="text-xs mt-2 text-[#84A59D]">Son of Mr. John & Mrs. Doe</p>
+            </div>
+        </section>
+
+        <!-- Events Section -->
+        <section id="events" class="relative z-10 py-16 px-6">
+            <h3 class="font-script text-5xl text-center text-[#F28482] mb-10 reveal">Save The Date</h3>
+            
+            <div class="glass-card p-8 text-center mb-8 reveal">
+                <div class="w-12 h-12 mx-auto bg-[#FFF1E6] rounded-full flex items-center justify-center mb-4 text-[#F28482]">
+                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                </div>
+                <h4 class="font-serif text-2xl font-bold mb-2">Holy Matrimony</h4>
+                <p class="font-bold text-[#F6BD60] mb-2">Sunday, 31 December 2026</p>
+                <p class="text-sm mb-4">09:00 AM - 11:00 AM</p>
+                <p class="text-xs text-gray-500 mb-6">Summer Chapel<br>Jl. Sunset Boulevard No. 99</p>
+                <a href="#" class="inline-block bg-white text-[#84A59D] border border-[#84A59D] px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-[#84A59D] hover:text-white transition-colors">View Location</a>
+            </div>
+
+            <div class="glass-card p-8 text-center reveal">
+                <div class="w-12 h-12 mx-auto bg-[#FFF1E6] rounded-full flex items-center justify-center mb-4 text-[#F6BD60]">
+                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18zm-3-9v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2h12z"/></svg>
+                </div>
+                <h4 class="font-serif text-2xl font-bold mb-2">Wedding Reception</h4>
+                <p class="font-bold text-[#F28482] mb-2">Sunday, 31 December 2026</p>
+                <p class="text-sm mb-4">19:00 PM - 22:00 PM</p>
+                <p class="text-xs text-gray-500 mb-6">Summer Garden<br>Jl. Sunset Boulevard No. 100</p>
+                <a href="#" class="inline-block bg-white text-[#84A59D] border border-[#84A59D] px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-[#84A59D] hover:text-white transition-colors">View Location</a>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery" class="relative z-10 py-16 px-6">
+            <h3 class="font-script text-5xl text-center text-[#84A59D] mb-10 reveal">Summer Memories</h3>
+            
+            <div class="grid grid-cols-2 gap-3 reveal">
+                <img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=600&auto=format&fit=crop" class="w-full h-40 object-cover rounded-tl-3xl rounded-br-3xl shadow-sm">
+                <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=600&auto=format&fit=crop" class="w-full h-40 object-cover rounded-tr-3xl rounded-bl-3xl shadow-sm mt-4">
+                <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=600&auto=format&fit=crop" class="w-full h-40 object-cover rounded-tl-3xl rounded-br-3xl shadow-sm -mt-4">
+                <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=600&auto=format&fit=crop" class="w-full h-40 object-cover rounded-tr-3xl rounded-bl-3xl shadow-sm">
+                <img src="https://images.unsplash.com/photo-1532712938736-59c715894504?q=80&w=1200&auto=format&fit=crop" class="w-full h-48 object-cover col-span-2 rounded-[2rem] shadow-sm mt-2">
+            </div>
+        </section>
+
+        <!-- Gift Section -->
+        <section id="gift" class="relative z-10 py-16 px-6 bg-white/50 backdrop-blur-md border-y border-white">
+            <h3 class="font-script text-5xl text-center text-[#F6BD60] mb-4 reveal">Wedding Gift</h3>
+            <p class="text-center text-xs text-gray-500 mb-8 reveal px-4">Your presence is our biggest gift. However, if you wish to give a gift, you may send it here:</p>
+            
+            <div class="space-y-4">
+                <div class="glass-card p-6 text-center reveal border-[#F28482]/20">
+                    <p class="font-bold text-[#F28482] mb-1">BCA</p>
+                    <h4 class="font-serif text-2xl mb-1 text-[#4A4036]" id="rek1">1234567890</h4>
+                    <p class="text-xs text-gray-500 mb-4">a.n. Olivia</p>
+                    <button onclick="copyRek('rek1')" class="bg-[#F28482]/10 text-[#F28482] px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-[#F28482] hover:text-white transition-colors">Copy Account</button>
+                </div>
+                
+                <div class="glass-card p-6 text-center reveal border-[#84A59D]/20">
+                    <p class="font-bold text-[#84A59D] mb-1">MANDIRI</p>
+                    <h4 class="font-serif text-2xl mb-1 text-[#4A4036]" id="rek2">0987654321</h4>
+                    <p class="text-xs text-gray-500 mb-4">a.n. Kevin</p>
+                    <button onclick="copyRek('rek2')" class="bg-[#84A59D]/10 text-[#84A59D] px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-[#84A59D] hover:text-white transition-colors">Copy Account</button>
+                </div>
+            </div>
+            <p id="copyToast" class="text-xs text-center font-bold mt-4 h-4 opacity-0 transition-opacity duration-300 text-[#84A59D]"></p>
+        </section>
+
+        <!-- RSVP Section -->
+        <section id="rsvp" class="relative z-10 py-16 px-6">
+            <h3 class="font-script text-5xl text-center text-[#F28482] mb-8 reveal">Guest Book</h3>
+            
+            <div class="glass-card p-6 mb-8 reveal">
+                <form onsubmit="submitRsvp(event)" class="space-y-4">
+                    <div>
+                        <input type="text" required class="w-full bg-white/50 border border-white focus:border-[#F28482] rounded-xl px-4 py-3 text-sm outline-none transition-colors" placeholder="Full Name">
+                    </div>
+                    <div>
+                        <div class="flex space-x-4 bg-white/50 p-2 rounded-xl border border-white">
+                            <label class="flex-1 text-center cursor-pointer relative group">
+                                <input type="radio" name="attendance" value="Hadir" class="peer sr-only" required>
+                                <div class="py-2 rounded-lg text-xs font-semibold text-gray-500 peer-checked:bg-[#84A59D] peer-checked:text-white transition-colors">Joyfully Accepts</div>
+                            </label>
+                            <label class="flex-1 text-center cursor-pointer relative group">
+                                <input type="radio" name="attendance" value="Tidak Hadir" class="peer sr-only">
+                                <div class="py-2 rounded-lg text-xs font-semibold text-gray-500 peer-checked:bg-[#F28482] peer-checked:text-white transition-colors">Regretfully Declines</div>
+                            </label>
+                        </div>
+                    </div>
+                    <div>
+                        <textarea required rows="3" class="w-full bg-white/50 border border-white focus:border-[#F28482] rounded-xl px-4 py-3 text-sm outline-none transition-colors resize-none" placeholder="Write your wishes..."></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-[#F6BD60] text-white px-8 py-3 rounded-xl font-bold uppercase tracking-widest text-xs hover:bg-[#F28482] shadow-md transition-colors">
+                        Send Reply
+                    </button>
+                    <p id="rsvpNote" class="text-center font-sans text-[10px] text-gray-400 mt-2">*This is a theme simulation.</p>
+                </form>
+            </div>
+
+            <!-- Comment Feed -->
+            <div id="ucapanList" class="space-y-4 max-h-[300px] overflow-y-auto pr-2 reveal">
+                <div class="glass-card p-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <h4 class="font-serif font-bold text-[#4A4036] text-sm">Family & Friends</h4>
+                        <span class="px-2 py-1 bg-[#84A59D]/10 text-[#84A59D] rounded-full text-[9px] uppercase font-bold tracking-wider">Hadir</span>
+                    </div>
+                    <p class="font-sans text-xs text-gray-600 leading-relaxed">Wishing you a lifetime of sunny days and warm hugs!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="py-12 text-center border-t border-[#FFF1E6] bg-white pb-32 relative z-10">
+            <h2 class="font-script text-4xl text-[#4A4036] mb-4">Olivia & Kevin</h2>
+            <p class="font-sans text-[9px] text-gray-400 tracking-widest uppercase">© 2026 Weeding Theme Builder</p>
+        </footer>
+
+    </div>
+
+    <script>
+        const bgMusic = document.getElementById('bg-music');
+        let isPlaying = false;
+
+        function openInvitation() {
+            document.getElementById('cover-screen').classList.add('opened');
+            document.body.classList.remove('overflow-hidden');
+            
+            bgMusic.play();
+            isPlaying = true;
+            document.getElementById('musicBtn').classList.remove('opacity-0', 'pointer-events-none');
+            
+            // trigger hero animations
+            setTimeout(() => {
+                document.querySelectorAll('#hero .reveal').forEach(el => el.classList.add('active'));
+            }, 800);
+        }
+
+        function toggleMusic() {
+            const btn = document.getElementById('musicBtn');
+            if (isPlaying) {
+                bgMusic.pause();
+                btn.classList.add('bg-gray-400');
+                btn.classList.remove('bg-[#F28482]');
+            } else {
+                bgMusic.play();
+                btn.classList.remove('bg-gray-400');
+                btn.classList.add('bg-[#F28482]');
+            }
+            isPlaying = !isPlaying;
+        }
+
+        // Intersection Observer for animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            if(!el.closest('#hero')) {
+                observer.observe(el);
+            }
+        });
+
+        // Copy Rekening logic
+        function copyRek(id) {
+            const rekText = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(rekText).then(() => {
+                const toast = document.getElementById('copyToast');
+                toast.textContent = 'Account number copied!';
+                toast.classList.remove('opacity-0');
+                setTimeout(() => {
+                    toast.classList.add('opacity-0');
+                }, 2000);
+            });
+        }
+
+        // RSVP logic
+        function submitRsvp(e) {
+            e.preventDefault();
+            const form = e.target;
+            const name = form.querySelector('input[type="text"]').value;
+            const msg = form.querySelector('textarea').value;
+            const attend = form.querySelector('input[name="attendance"]:checked').value;
+            
+            const badgeClass = (attend === 'Hadir') 
+                ? 'bg-[#84A59D]/10 text-[#84A59D]' 
+                : 'bg-[#F28482]/10 text-[#F28482]';
+
+            const item = document.createElement('div');
+            item.className = 'glass-card p-4 reveal active';
+            item.innerHTML = `
+                <div class="flex items-center justify-between mb-2">
+                    <h4 class="font-serif font-bold text-[#4A4036] text-sm">${name}</h4>
+                    <span class="px-2 py-1 ${badgeClass} rounded-full text-[9px] uppercase font-bold tracking-wider">${attend}</span>
+                </div>
+                <p class="font-sans text-xs text-gray-600 leading-relaxed">${msg}</p>
+            `;
+            
+            const list = document.getElementById('ucapanList');
+            list.insertBefore(item, list.firstChild);
+            
+            document.getElementById('rsvpNote').textContent = 'Thank you for your wishes!';
+            form.reset();
+            
+            setTimeout(() => {
+                document.getElementById('rsvpNote').textContent = '*This is a theme simulation.';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

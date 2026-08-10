@@ -681,12 +681,27 @@
   <footer>Undangan Digital · dibuat dengan ♡</footer>
 </div>
 
+<audio id="bg-music" loop>
+  <source src="../../assets/music/Mitski-My-Love-Mine-All-Mine-Official-Lyric-Video.mp3" type="audio/mpeg">
+</audio>
+
 <script>
+  const bgMusic = document.getElementById('bg-music');
+  let isPlaying = false;
+
   document.body.style.overflow = 'hidden';
   function openInvitation(){
     document.getElementById('cover').classList.add('opened');
     document.body.style.overflow = 'auto';
     document.getElementById('bottomNav').classList.add('visible');
+    
+    bgMusic.play();
+    isPlaying = true;
+    const soundBtn = document.querySelector('.sound-toggle');
+    soundBtn.classList.add('on');
+    soundBtn.style.background = 'var(--gold-light)';
+    soundBtn.style.color = 'var(--ink)';
+
     setTimeout(() => {
       document.querySelectorAll('#quote .reveal').forEach(el => el.classList.add('show'));
     }, 400);
@@ -711,6 +726,12 @@
   });
 
   function toggleSound(btn){
+    if (isPlaying) {
+      bgMusic.pause();
+    } else {
+      bgMusic.play();
+    }
+    isPlaying = !isPlaying;
     btn.classList.toggle('on');
     btn.style.background = btn.classList.contains('on') ? 'var(--gold-light)' : 'rgba(20,16,13,.55)';
     btn.style.color = btn.classList.contains('on') ? 'var(--ink)' : 'var(--gold-light)';

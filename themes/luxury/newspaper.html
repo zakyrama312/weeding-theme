@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Daily Matrimony - Newspaper Theme</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for Editorial / Newspaper Look -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Lora:ital,wght@0,400;0,500;1,400&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        newspaper: ['UnifrakturMaguntia', 'serif'], // For the main masthead
+                        serif: ['Playfair Display', 'serif'], // Headlines
+                        body: ['Lora', 'serif'], // Body text
+                    },
+                    colors: {
+                        paper: {
+                            100: '#f9f7f1',
+                            200: '#f4f1ea',
+                            300: '#e8e3d3', // slightly darker for borders/accents
+                        },
+                        ink: {
+                            DEFAULT: '#1c1c1c',
+                            light: '#3d3d3d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #f4f1ea;
+            color: #1c1c1c;
+            background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
+        }
+        /* Custom scrollbar for vintage feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e8e3d3;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1c1c1c;
+        }
+        .newspaper-border {
+            border: 4px double #1c1c1c;
+        }
+        .newspaper-border-y {
+            border-top: 4px double #1c1c1c;
+            border-bottom: 4px double #1c1c1c;
+        }
+        .drop-cap::first-letter {
+            float: left;
+            font-size: 4rem;
+            line-height: 0.8;
+            padding-right: 0.5rem;
+            padding-top: 0.2rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+        }
+        .col-count-2 {
+            column-count: 1;
+        }
+        @media (min-width: 768px) {
+            .col-count-2 {
+                column-count: 2;
+                column-gap: 2rem;
+            }
+        }
+        .vintage-img {
+            filter: grayscale(100%) contrast(120%) sepia(20%);
+            mix-blend-mode: multiply;
+        }
+        
+        /* Cover Screen */
+        #cover-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background-color: #f4f1ea;
+            background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1), opacity 1.2s ease;
+        }
+        #cover-screen.opened {
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Entrance Animations */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-up {
+            animation: fadeUp 1s ease-out forwards;
+            opacity: 0;
+        }
+        .delay-100 { animation-delay: 100ms; }
+        .delay-300 { animation-delay: 300ms; }
+        .delay-500 { animation-delay: 500ms; }
+    </style>
+</head>
+<body class="font-body antialiased min-h-screen overflow-hidden">
+
+    <!-- Cover Screen -->
+    <div id="cover-screen">
+        <div class="relative z-10 text-center px-6 w-full max-w-md mx-auto flex flex-col items-center justify-center h-full border-[4px] double border-ink p-8 m-4 bg-paper-100/90 shadow-2xl">
+            <h1 class="font-newspaper text-6xl text-ink mb-6">The Daily Matrimony</h1>
+            <p class="font-serif text-sm tracking-widest uppercase mb-2">Wedding</p>
+            <h2 class="font-serif text-4xl mb-8">Eleanor & Arthur</h2>
+            <p class="font-sans text-xs italic mb-2">To:</p>
+            <p class="font-serif text-xl font-bold mb-10">Invited Guest</p>
+            
+            <button onclick="openInvitation()" class="border-2 border-ink bg-ink text-paper-100 px-8 py-3 font-serif font-bold uppercase tracking-widest hover:bg-paper-100 hover:text-ink transition-colors w-full">
+                Read the Edition
+            </button>
+        </div>
+    </div>
+
+    <!-- Audio Player (Hidden) -->
+    <audio id="bg-music" loop>
+        <source src="../../assets/music/elliot-james-reay-love.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Main Container -->
+    <div class="max-w-4xl mx-auto bg-paper-100 min-h-screen shadow-2xl relative border-x border-paper-300">
+        
+        <!-- Top Info Bar -->
+        <div class="flex justify-between items-center py-2 px-6 border-b border-ink text-[10px] md:text-sm font-serif font-semibold uppercase tracking-widest">
+            <span>Vol. I — No. 1</span>
+            <span>Sunday, October 25, 2026</span>
+            <span>Two Cents</span>
+        </div>
+
+        <!-- Header / Masthead -->
+        <header class="text-center pt-8 pb-6 px-6 animate-fade-up">
+            <h1 class="font-newspaper text-5xl md:text-7xl lg:text-8xl tracking-tight mb-2 text-ink">The Daily Matrimony</h1>
+            <div class="newspaper-border-y py-2 mt-6">
+                <p class="font-serif text-base md:text-lg italic tracking-wide">"A Love Story for the Ages: Two Hearts Become One"</p>
+            </div>
+        </header>
+
+        <!-- Main Content Grid -->
+        <main class="px-6 pb-12">
+            
+            <!-- Hero Article -->
+            <article class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12 animate-fade-up delay-100">
+                
+                <!-- Left Column (Text) -->
+                <div class="lg:col-span-5 flex flex-col justify-center">
+                    <h2 class="font-serif text-3xl md:text-4xl font-bold leading-none mb-4 uppercase">It Is Official! <br> They Are Getting Married</h2>
+                    <p class="text-ink-light text-sm font-serif italic mb-4">By The Editorial Board</p>
+                    <p class="drop-cap text-justify leading-relaxed mb-4">
+                        The city is abuzz with the joyous news of the upcoming nuptials between <span class="font-bold">Eleanor</span> and <span class="font-bold">Arthur</span>. 
+                        After a whirlwind romance that captured the hearts of many, the couple has finally announced their intention to be wed in holy matrimony.
+                    </p>
+                    <p class="text-justify leading-relaxed">
+                        Friends and family describe their union as a perfect match, written in the stars. The grand event is scheduled to take place this coming autumn, promising an evening of elegance, celebration, and eternal love.
+                    </p>
+                </div>
+
+                <!-- Right Column (Image) -->
+                <div class="lg:col-span-7 border-[3px] border-ink p-2">
+                    <div class="border border-ink p-1">
+                        <!-- Placeholder for couple image, styled vintage -->
+                        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop" alt="The Happy Couple" class="w-full h-[400px] object-cover vintage-img">
+                    </div>
+                    <p class="text-center text-xs font-serif italic mt-2">The happy couple photographed during their engagement in the city park.</p>
+                </div>
+
+            </article>
+
+            <!-- Divider -->
+            <div class="flex items-center justify-center space-x-4 mb-12">
+                <div class="h-px bg-ink flex-grow"></div>
+                <span class="font-serif text-2xl">❧</span>
+                <div class="h-px bg-ink flex-grow"></div>
+            </div>
+
+            <!-- Details Section -->
+            <section class="mb-12 animate-fade-up delay-300">
+                <h3 class="font-serif text-2xl md:text-3xl font-bold text-center uppercase border-b-2 border-ink pb-4 mb-8">The Grand Affair Details</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Holy Matrimony -->
+                    <div class="border border-ink p-6 relative">
+                        <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-paper-100 px-2 font-serif italic font-bold">The Ceremony</div>
+                        <h4 class="font-serif text-2xl text-center mb-2 mt-4">Holy Matrimony</h4>
+                        <p class="text-center font-bold mb-4">Sunday, October 25, 2026</p>
+                        <p class="text-center mb-2">09:00 AM - 11:00 AM</p>
+                        <p class="text-center italic mb-4">The Grand Cathedral<br>123 Vintage Avenue</p>
+                        <div class="text-center">
+                            <a href="#" class="inline-block border border-ink px-4 py-1 text-sm uppercase tracking-widest hover:bg-ink hover:text-paper-100 transition-colors">View Map</a>
+                        </div>
+                    </div>
+
+                    <!-- Reception -->
+                    <div class="border border-ink p-6 relative">
+                        <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-paper-100 px-2 font-serif italic font-bold">The Celebration</div>
+                        <h4 class="font-serif text-2xl text-center mb-2 mt-4">Wedding Reception</h4>
+                        <p class="text-center font-bold mb-4">Sunday, October 25, 2026</p>
+                        <p class="text-center mb-2">07:00 PM - 10:00 PM</p>
+                        <p class="text-center italic mb-4">The Heritage Ballroom<br>456 Elegant Street</p>
+                        <div class="text-center">
+                            <a href="#" class="inline-block border border-ink px-4 py-1 text-sm uppercase tracking-widest hover:bg-ink hover:text-paper-100 transition-colors">View Map</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Gallery Section -->
+            <section class="mb-12 animate-fade-up delay-300">
+                <h3 class="font-serif text-2xl md:text-3xl font-bold text-center uppercase border-b-2 border-ink pb-4 mb-8">Captured Moments</h3>
+                
+                <div class="border-[4px] double border-ink p-2 mb-4 bg-paper-200">
+                    <div class="border border-ink p-1 relative">
+                        <img id="main-gallery-img" src="https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=1200&auto=format&fit=crop" class="w-full h-64 md:h-[400px] object-cover vintage-img transition-opacity duration-300">
+                    </div>
+                    <p id="main-gallery-caption" class="text-center font-serif italic text-sm mt-3 pb-1 transition-opacity duration-300">A beautiful walk in the park.</p>
+                </div>
+                
+                <!-- Thumbnails -->
+                <div class="grid grid-cols-5 gap-2 md:gap-4">
+                    <button type="button" onclick="changeGallery(0)" class="border-[3px] border-ink p-1 opacity-100 transition-all gallery-thumb bg-paper-100">
+                        <img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=800&auto=format&fit=crop" class="w-full h-12 md:h-20 object-cover vintage-img">
+                    </button>
+                    <button type="button" onclick="changeGallery(1)" class="border border-ink/30 p-1 opacity-50 hover:opacity-100 transition-all gallery-thumb bg-paper-100">
+                        <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=800&auto=format&fit=crop" class="w-full h-12 md:h-20 object-cover vintage-img">
+                    </button>
+                    <button type="button" onclick="changeGallery(2)" class="border border-ink/30 p-1 opacity-50 hover:opacity-100 transition-all gallery-thumb bg-paper-100">
+                        <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=800&auto=format&fit=crop" class="w-full h-12 md:h-20 object-cover vintage-img">
+                    </button>
+                    <button type="button" onclick="changeGallery(3)" class="border border-ink/30 p-1 opacity-50 hover:opacity-100 transition-all gallery-thumb bg-paper-100">
+                        <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=800&auto=format&fit=crop" class="w-full h-12 md:h-20 object-cover vintage-img">
+                    </button>
+                    <button type="button" onclick="changeGallery(4)" class="border border-ink/30 p-1 opacity-50 hover:opacity-100 transition-all gallery-thumb bg-paper-100">
+                        <img src="https://images.unsplash.com/photo-1532712938736-59c715894504?q=80&w=1200&auto=format&fit=crop" class="w-full h-12 md:h-20 object-cover vintage-img">
+                    </button>
+                </div>
+            </section>
+
+            <!-- Tanda Kasih Section -->
+            <section class="mb-12 animate-fade-up delay-500">
+                <h3 class="font-serif text-3xl md:text-4xl font-bold text-center uppercase border-b-2 border-ink pb-4 mb-8">Wishing Well</h3>
+                <p class="text-center font-serif italic mb-6">For those who wish to bless us with a gift, you may send it via the following accounts:</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Rekening 1 -->
+                    <div class="border border-ink p-6 text-center relative bg-paper-200">
+                        <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-paper-100 px-2 font-serif italic font-bold">Bank BCA</div>
+                        <h4 class="font-serif text-2xl mt-4 mb-2" id="rek1">1234567890</h4>
+                        <p class="font-bold mb-4 uppercase text-sm">a.n. Eleanor</p>
+                        <button onclick="copyRek('rek1')" class="inline-block border border-ink px-4 py-1 text-xs uppercase tracking-widest hover:bg-ink hover:text-paper-100 transition-colors">Copy Number</button>
+                    </div>
+                    <!-- Rekening 2 -->
+                    <div class="border border-ink p-6 text-center relative bg-paper-200">
+                        <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-paper-100 px-2 font-serif italic font-bold">Bank Mandiri</div>
+                        <h4 class="font-serif text-2xl mt-4 mb-2" id="rek2">0987654321</h4>
+                        <p class="font-bold mb-4 uppercase text-sm">a.n. Arthur</p>
+                        <button onclick="copyRek('rek2')" class="inline-block border border-ink px-4 py-1 text-xs uppercase tracking-widest hover:bg-ink hover:text-paper-100 transition-colors">Copy Number</button>
+                    </div>
+                </div>
+                <p id="copyToast" class="text-xs text-center font-bold mt-4 h-4 opacity-0 transition-opacity duration-300"></p>
+            </section>
+
+            <!-- RSVP Section -->
+            <section class="border-[3px] border-ink p-8 mb-12 animate-fade-up delay-500 bg-paper-200">
+                <h3 class="font-serif text-3xl font-bold text-center uppercase mb-2">Guest Book</h3>
+                <p class="text-center font-serif italic mb-6">Your presence and blessings are our greatest honor</p>
+                
+                <form onsubmit="submitRsvp(event)" class="max-w-md mx-auto space-y-4">
+                    <div>
+                        <label class="block font-serif font-bold text-sm uppercase mb-1">Full Name</label>
+                        <input type="text" required class="w-full bg-transparent border-b border-ink focus:outline-none focus:border-b-2 px-2 py-1 placeholder-ink-light/50" placeholder="Enter your name">
+                    </div>
+                    <div>
+                        <label class="block font-serif font-bold text-sm uppercase mb-1 mt-4">Will you attend?</label>
+                        <div class="flex space-x-6 mt-2">
+                            <label class="flex items-center space-x-2 cursor-pointer rsvp-radio">
+                                <input type="radio" name="attendance" value="Hadir" class="accent-ink w-4 h-4" required>
+                                <span class="font-serif">Joyfully Accepts</span>
+                            </label>
+                            <label class="flex items-center space-x-2 cursor-pointer rsvp-radio">
+                                <input type="radio" name="attendance" value="Tidak Hadir" class="accent-ink w-4 h-4">
+                                <span class="font-serif">Regretfully Declines</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block font-serif font-bold text-sm uppercase mb-1 mt-4">Message & Wishes</label>
+                        <textarea required rows="3" class="w-full bg-transparent border border-ink focus:outline-none focus:border-2 px-2 py-2 text-sm resize-none" placeholder="Write your wishes for the couple..."></textarea>
+                    </div>
+                    <div class="pt-4 text-center">
+                        <button type="submit" class="border-2 border-ink bg-ink text-paper-100 px-8 py-2 font-serif font-bold uppercase tracking-widest hover:bg-paper-100 hover:text-ink transition-colors w-full">
+                            Send Reply
+                        </button>
+                    </div>
+                    <p id="rsvpNote" class="text-center font-serif text-[10px] text-ink-light mt-2">*This form is a theme simulation.</p>
+                </form>
+
+                <!-- Comment Feed -->
+                <div id="ucapanList" class="mt-8 space-y-4 max-h-[300px] overflow-y-auto pr-2">
+                    <!-- Dummy comment -->
+                    <div class="border border-ink p-4 bg-paper-100">
+                        <div class="flex items-center justify-between mb-2 border-b border-ink/30 pb-2">
+                            <h4 class="font-serif font-bold text-ink uppercase text-sm">Family & Friends</h4>
+                            <span class="px-2 py-1 border border-ink text-[9px] uppercase font-bold tracking-wider">Hadir</span>
+                        </div>
+                        <p class="font-body text-sm leading-relaxed">Wishing you a lifetime of love and happiness.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Love Story Snippet -->
+            <section class="col-count-2 text-justify leading-relaxed border-t border-b border-ink py-6 mb-8 text-sm">
+                <h3 class="font-serif text-xl font-bold uppercase mb-2">Classifieds: A Love Found</h3>
+                <p class="mb-2">It started on a rainy afternoon at the local library. A shared umbrella, a conversation over classic literature, and the rest, as they say, is history. Through seasons of change and years of growth, their bond only strengthened.</p>
+                <p>We invite you to be part of the next chapter. Your presence is the greatest gift of all. For those wishing to contribute to their new life together, a wishing well will be available at the reception.</p>
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-ink text-paper-100 text-center py-4 px-6 text-xs font-serif uppercase tracking-widest">
+            <p>Printed by The WeedingBuilder Press &copy; 2026</p>
+        </footer>
+
+    </div>
+
+    <!-- Floating Music Button -->
+    <button id="music-btn" class="fixed bottom-6 right-6 w-12 h-12 bg-ink text-paper-100 rounded-full flex items-center justify-center shadow-lg hover:bg-ink-light transition-all duration-1000 opacity-0 pointer-events-none z-50">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+        </svg>
+    </button>
+
+    <script>
+        function openInvitation() {
+            document.getElementById('cover-screen').classList.add('opened');
+            document.body.classList.remove('overflow-hidden');
+            
+            setTimeout(() => {
+                document.getElementById('music-btn').classList.remove('opacity-0', 'pointer-events-none');
+                bgMusic.play();
+                isPlaying = true;
+                musicBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>';
+            }, 800);
+        }
+
+        // Music Player Logic
+        const musicBtn = document.getElementById('music-btn');
+        const bgMusic = document.getElementById('bg-music');
+        let isPlaying = false;
+
+        musicBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" /></svg>';
+            } else {
+                bgMusic.play();
+                musicBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>';
+            }
+            isPlaying = !isPlaying;
+        });
+
+        // Trigger animations on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        });
+
+        document.querySelectorAll('.animate-fade-up').forEach((el) => {
+            el.style.animationPlayState = 'paused';
+            observer.observe(el);
+        });
+
+        // Gallery logic
+        const galleryData = [
+            { src: 'https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=1200&auto=format&fit=crop', caption: 'A beautiful walk in the park.' },
+            { src: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1200&auto=format&fit=crop', caption: 'Stolen glances during the evening.' },
+            { src: 'https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=1200&auto=format&fit=crop', caption: 'The engagement ring.' },
+            { src: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=1200&auto=format&fit=crop', caption: 'A tender moment.' },
+            { src: 'https://images.unsplash.com/photo-1532712938736-59c715894504?q=80&w=1200&auto=format&fit=crop', caption: 'Looking towards the future together.' }
+        ];
+
+        function changeGallery(index) {
+            const mainImg = document.getElementById('main-gallery-img');
+            const mainCaption = document.getElementById('main-gallery-caption');
+            const thumbs = document.querySelectorAll('.gallery-thumb');
+            
+            mainImg.style.opacity = 0;
+            mainCaption.style.opacity = 0;
+            
+            setTimeout(() => {
+                mainImg.src = galleryData[index].src;
+                mainCaption.textContent = galleryData[index].caption;
+                mainImg.style.opacity = 1;
+                mainCaption.style.opacity = 1;
+            }, 300);
+
+            thumbs.forEach((t, i) => {
+                if (i === index) {
+                    t.classList.add('border-[3px]', 'border-ink', 'opacity-100');
+                    t.classList.remove('border', 'border-ink/30', 'opacity-50');
+                } else {
+                    t.classList.remove('border-[3px]', 'border-ink', 'opacity-100');
+                    t.classList.add('border', 'border-ink/30', 'opacity-50');
+                }
+            });
+        }
+
+        // Copy Rekening logic
+        function copyRek(id) {
+            const rekText = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(rekText).then(() => {
+                const toast = document.getElementById('copyToast');
+                toast.textContent = 'Account number successfully copied!';
+                toast.classList.remove('opacity-0');
+                setTimeout(() => {
+                    toast.classList.add('opacity-0');
+                }, 2000);
+            });
+        }
+
+        // RSVP logic
+        function submitRsvp(e) {
+            e.preventDefault();
+            const form = e.target;
+            const name = form.querySelector('input[type="text"]').value;
+            const msg = form.querySelector('textarea').value;
+            const attend = form.querySelector('input[name="attendance"]:checked').value;
+            
+            const item = document.createElement('div');
+            item.className = 'border border-ink p-4 bg-paper-100 animate-fade-up';
+            item.style.animationPlayState = 'running';
+            item.innerHTML = `
+                <div class="flex items-center justify-between mb-2 border-b border-ink/30 pb-2">
+                    <h4 class="font-serif font-bold text-ink uppercase text-sm">${name}</h4>
+                    <span class="px-2 py-1 border border-ink text-[9px] uppercase font-bold tracking-wider">${attend}</span>
+                </div>
+                <p class="font-body text-sm leading-relaxed">${msg}</p>
+            `;
+            
+            const list = document.getElementById('ucapanList');
+            list.insertBefore(item, list.firstChild);
+            
+            document.getElementById('rsvpNote').textContent = 'Thank you for your wishes & confirmation!';
+            form.reset();
+            
+            setTimeout(() => {
+                document.getElementById('rsvpNote').textContent = '*This form is a theme simulation.';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
