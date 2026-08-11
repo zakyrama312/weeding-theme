@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Premium Scrapbook - Wedding Theme</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,600&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        hand: ['Caveat', 'cursive'],
+                        serif: ['Playfair Display', 'serif'],
+                        script: ['Shadows Into Light', 'cursive'],
+                    },
+                    colors: {
+                        board: '#2A2C2B', /* Dark corkboard/desk */
+                        paper: '#FDFBF7', /* Crisp textured paper */
+                        vintage: '#F3E9D2', /* Aged paper */
+                        ink: '#1A1A1A',
+                        accent: '#8B3A3A', /* Wax seal red */
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Vignette and Texture */
+        body {
+            background-color: #2A2C2B;
+            background-image: 
+                radial-gradient(circle at center, transparent 0%, #111 120%),
+                url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+            color: #1A1A1A;
+            overflow-x: hidden;
+        }
+
+        /* 3D Floating Polaroid */
+        .premium-polaroid {
+            background: #fff;
+            padding: 15px 15px 60px 15px;
+            box-shadow: 
+                0 20px 40px rgba(0,0,0,0.4),
+                inset 0 0 40px rgba(200,180,150,0.1);
+            position: relative;
+            transform-style: preserve-3d;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border-radius: 2px;
+        }
+        .premium-polaroid:hover {
+            transform: translateY(-10px) scale(1.02) rotate(2deg);
+            box-shadow: 
+                0 30px 60px rgba(0,0,0,0.5),
+                inset 0 0 40px rgba(200,180,150,0.1);
+            z-index: 50;
+        }
+        
+        .photo-filter {
+            filter: contrast(1.1) brightness(0.9) sepia(0.3);
+            border-radius: 2px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        /* Realistic Masking Tape */
+        .masking-tape {
+            position: absolute;
+            width: 120px;
+            height: 35px;
+            background-color: rgba(255, 255, 255, 0.35);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            backdrop-filter: blur(4px);
+            z-index: 10;
+            border-left: 3px dashed rgba(0,0,0,0.1);
+            border-right: 3px dashed rgba(0,0,0,0.1);
+            background-image: linear-gradient(90deg, transparent 50%, rgba(255,255,255,0.1) 50%);
+            background-size: 4px 100%;
+        }
+
+        /* Swing Animation for Hero */
+        @keyframes swing {
+            0% { transform: rotate(-3deg); }
+            50% { transform: rotate(3deg); }
+            100% { transform: rotate(-3deg); }
+        }
+        .swinging {
+            transform-origin: top center;
+            animation: swing 6s ease-in-out infinite;
+        }
+
+        /* Paperclip */
+        .paperclip {
+            position: absolute;
+            top: -25px;
+            left: 20px;
+            width: 30px;
+            height: 70px;
+            border: 4px solid #B0BEC5;
+            border-radius: 15px;
+            background: transparent;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+            z-index: 20;
+            clip-path: polygon(0 0, 100% 0, 100% 80%, 0 80%);
+        }
+
+        /* Torn Paper Edge Divider */
+        .torn-paper {
+            width: 100%;
+            height: 40px;
+            background: #FDFBF7;
+            position: relative;
+            box-shadow: 0 -10px 20px rgba(0,0,0,0.3);
+        }
+        .torn-paper::after {
+            content: "";
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 100%;
+            height: 15px;
+            background: linear-gradient(-45deg, transparent 75%, #FDFBF7 75%) 0 50%,
+                        linear-gradient( 45deg, transparent 75%, #FDFBF7 75%) 0 50%;
+            background-repeat: repeat-x;
+            background-size: 15px 30px;
+        }
+
+        /* Film Strip Gallery */
+        .film-strip {
+            background: #111;
+            padding: 20px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            position: relative;
+        }
+        .film-strip::before, .film-strip::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 12px;
+            background-image: linear-gradient(90deg, transparent 50%, #111 50%),
+                              linear-gradient(90deg, #fff 50%, transparent 50%);
+            background-size: 24px 12px;
+        }
+        .film-strip::before { top: 4px; }
+        .film-strip::after { bottom: 4px; }
+        
+        .film-frame {
+            border: 2px solid #222;
+            padding: 2px;
+            background: transparent;
+            transition: transform 0.3s;
+        }
+        .film-frame:hover {
+            transform: scale(1.1);
+            z-index: 10;
+        }
+
+        /* Drop & Bounce Animation */
+        .drop-in {
+            opacity: 0;
+            transform: translateY(-100px) scale(1.2) rotate(15deg);
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .drop-in.active {
+            opacity: 1;
+            transform: translateY(0) scale(1) rotate(0);
+        }
+        
+        .stamp-in {
+            opacity: 0;
+            transform: scale(2);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .stamp-in.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #2A2C2B; }
+        ::-webkit-scrollbar-thumb { background: #555; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #888; }
+        .hide-scroll::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Desktop Left Side (Fixed) -->
+    <div class="hidden lg:flex fixed inset-y-0 left-0 right-[420px] flex-col items-center justify-center bg-board overflow-hidden shadow-[inset_0_0_100px_rgba(0,0,0,0.8)] border-r border-ink">
+        <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 20px 20px;"></div>
+        
+        <div class="premium-polaroid transform -rotate-3 hover:rotate-0 w-80 mb-8 cursor-default z-10 transition-all duration-700">
+            <div class="masking-tape top-[-15px] left-1/2 -translate-x-1/2 rotate-[-2deg]"></div>
+            <div class="relative overflow-hidden w-full aspect-[4/5]">
+                <img src="../../assets/foto/pengantin_1.jpeg" class="w-full h-full object-cover object-top photo-filter">
+            </div>
+            <div class="absolute bottom-4 left-0 w-full text-center">
+                <p class="font-hand text-4xl font-bold text-ink">Bagas & Ayu</p>
+            </div>
+        </div>
+        
+        <div class="text-center z-10 stamp-in active">
+            <p class="font-serif italic text-white/50 mb-2 tracking-widest text-sm">WEDDING INVITATION</p>
+            <h1 class="font-hand text-6xl text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">A Beautiful Journey</h1>
+        </div>
+    </div>
+
+    <!-- MAIN APP CONTAINER (Scrollable) -->
+    <div id="app-wrap" class="w-full lg:w-[420px] lg:ml-auto min-h-[100svh] relative bg-board overflow-x-hidden shadow-[-10px_0_30px_rgba(0,0,0,0.5)]">
+
+    <!-- Hero / Hanging Polaroid -->
+    <section class="min-h-[100svh] flex flex-col items-center justify-center p-6 relative overflow-hidden">
+        
+        <!-- Hanging String -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[2px] h-32 bg-white/30 z-0"></div>
+
+        <div class="premium-polaroid swinging z-10 max-w-sm w-full mt-20 cursor-pointer" onclick="openBook()">
+            <div class="masking-tape top-[-15px] left-1/2 -translate-x-1/2 rotate-[-2deg]"></div>
+            
+            <div class="relative overflow-hidden w-full aspect-[4/5]">
+                <img src="../../assets/foto/pengantin_1.jpeg" alt="Cover" class="w-full h-full object-cover photo-filter transform hover:scale-110 transition-transform duration-1000">
+            </div>
+            
+            <div class="absolute bottom-4 left-0 w-full text-center">
+                <p class="font-hand text-4xl font-bold text-ink drop-shadow-sm">Bagas & Ayu</p>
+                <p class="font-script text-sm text-ink/60 mt-1">Tap to open our story</p>
+            </div>
+        </div>
+
+        <div class="mt-16 text-center stamp-in" style="transition-delay: 500ms;">
+            <p class="font-serif italic text-white/50 mb-2 tracking-widest text-sm">CHAPTER ONE</p>
+            <h1 class="font-hand text-6xl text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">A Beautiful Journey</h1>
+        </div>
+    </section>
+
+    <!-- Main Board (Hidden Initially) -->
+    <div id="mainContent" class="hidden relative">
+        
+        <!-- Torn Paper Divider -->
+        <div class="torn-paper z-20"></div>
+
+        <!-- The "Desk" Content -->
+        <div class="bg-vintage relative pt-20 pb-32 px-4 shadow-[inset_0_0_100px_rgba(0,0,0,0.2)]">
+            
+            <!-- Sticky Notes Background Pattern -->
+            <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(#000 1px, transparent 1px); background-size: 20px 20px;"></div>
+
+            <!-- Couple Presentation -->
+            <div class="text-center mb-20 relative z-10 drop-in">
+                <h2 class="font-hand text-5xl text-ink">The Main Characters</h2>
+                <svg class="w-48 h-4 mx-auto mt-2 text-ink/30" viewBox="0 0 200 20" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 10 Q 50 20, 100 10 T 195 10"/></svg>
+            </div>
+
+            <div class="flex flex-col gap-12 items-center justify-center max-w-sm mx-auto relative z-10">
+                
+                <!-- Groom Polaroid -->
+                <div class="premium-polaroid transform -rotate-3 w-64 drop-in" style="transition-delay: 200ms;">
+                    <div class="paperclip"></div>
+                    <img src="../../assets/foto/pengantin_cowo.jpeg" alt="Bagas" class="w-full aspect-square object-cover object-top photo-filter">
+                    <div class="mt-4 text-center">
+                        <p class="font-script text-3xl font-bold text-ink">Bagas</p>
+                        <p class="font-serif italic text-xs text-ink/50 mt-1">"The lucky guy"</p>
+                    </div>
+                </div>
+
+                <!-- Ampersand -->
+                <div class="font-serif italic text-6xl text-accent/40 font-bold drop-in" style="transition-delay: 400ms;">&</div>
+
+                <!-- Bride Polaroid -->
+                <div class="premium-polaroid transform rotate-6 w-64 drop-in" style="transition-delay: 600ms;">
+                    <div class="masking-tape top-[-10px] right-[-10px] transform rotate-[45deg]"></div>
+                    <img src="../../assets/foto/pengantin_cewe.jpeg" alt="Ayu" class="w-full aspect-square object-cover object-top photo-filter">
+                    <div class="mt-4 text-center">
+                        <p class="font-script text-3xl font-bold text-ink">Ayu</p>
+                        <p class="font-serif italic text-xs text-ink/50 mt-1">"The beautiful bride"</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Details (Notebook paper) -->
+            <div class="max-w-2xl mx-auto mt-32 relative drop-in z-10">
+                <!-- Pushpins -->
+                <div class="absolute -top-3 left-4 w-6 h-6 rounded-full bg-red-800 shadow-[2px_5px_5px_rgba(0,0,0,0.5)] border-2 border-red-900 z-20 before:content-[''] before:absolute before:top-1 before:left-1 before:w-1.5 before:h-1.5 before:bg-white/40 before:rounded-full"></div>
+                <div class="absolute -top-3 right-4 w-6 h-6 rounded-full bg-red-800 shadow-[2px_5px_5px_rgba(0,0,0,0.5)] border-2 border-red-900 z-20 before:content-[''] before:absolute before:top-1 before:left-1 before:w-1.5 before:h-1.5 before:bg-white/40 before:rounded-full"></div>
+
+                <div class="bg-white p-8 md:p-12 shadow-[0_15px_35px_rgba(0,0,0,0.15)] transform rotate-1 rounded-sm relative overflow-hidden">
+                    <!-- Notebook lines -->
+                    <div class="absolute inset-0 pointer-events-none" style="background-image: repeating-linear-gradient(transparent, transparent 31px, #60A5FA33 31px, #60A5FA33 32px); margin-top: 60px;"></div>
+                    <div class="absolute left-8 top-0 bottom-0 w-[2px] bg-red-400/30"></div>
+
+                    <h3 class="font-hand text-5xl mb-8 pl-8 text-ink">Save the Date!</h3>
+                    
+                    <div class="pl-8 space-y-8 font-script text-2xl text-ink/80 leading-relaxed relative z-10">
+                        <div class="flex items-start gap-4">
+                            <span class="text-accent text-3xl">❤</span>
+                            <div>
+                                <p class="font-bold text-3xl text-ink">Akad Nikah</p>
+                                <p class="text-xl">Minggu, 28 Des 2027</p>
+                                <p class="text-xl">08:00 - Selesai</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start gap-4">
+                            <span class="text-accent text-3xl">🎉</span>
+                            <div>
+                                <p class="font-bold text-3xl text-ink">Resepsi</p>
+                                <p class="text-xl">Pukul 11:00 - 14:00</p>
+                                <p class="text-xl">Gedung Kenangan Indah, Jakarta</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div> <!-- End Desk Content -->
+
+        <!-- Our Journey Timeline -->
+        <div class="py-20 px-4 bg-vintage relative shadow-[inset_0_0_50px_rgba(0,0,0,0.1)] z-10">
+            <div class="text-center mb-8 drop-in">
+                <p class="font-sans uppercase tracking-[0.2em] text-[10px] font-bold text-[#D48A6A] mb-2">How it started</p>
+                <h2 class="font-hand text-6xl text-ink drop-shadow-sm">Our Journey</h2>
+            </div>
+            
+            <div class="max-w-sm mx-auto bg-white border-2 border-dashed border-[#D48A6A]/40 p-6 pt-10 drop-in relative shadow-[0_15px_30px_rgba(0,0,0,0.1)]">
+                
+                <div class="space-y-10">
+                    <!-- Item 1 -->
+                    <div class="flex gap-4 items-start">
+                        <div class="premium-polaroid w-24 shrink-0 transform -rotate-3 shadow-[0_5px_15px_rgba(0,0,0,0.1)] p-1 pb-4">
+                            <img src="../../assets/foto/pengantin_1.jpeg" class="w-full aspect-square object-cover photo-filter">
+                        </div>
+                        <div>
+                            <p class="font-script text-xl font-bold text-[#D48A6A]">25 Agustus 2023</p>
+                            <p class="font-sans text-sm text-ink/80 mt-1 leading-relaxed">Bertemu tanpa sengaja di kedai kopi favorit, awalnya cuma teman kerja yang sering ngobrol soal deadline.</p>
+                        </div>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="flex gap-4 items-start">
+                        <div class="premium-polaroid w-24 shrink-0 transform rotate-2 shadow-[0_5px_15px_rgba(0,0,0,0.1)] p-1 pb-4">
+                            <img src="../../assets/foto/pengantin_2.jpeg" class="w-full aspect-square object-cover photo-filter">
+                        </div>
+                        <div>
+                            <p class="font-script text-xl font-bold text-[#D48A6A]">3 Juni 2024</p>
+                            <p class="font-sans text-sm text-ink/80 mt-1 leading-relaxed">Memutuskan untuk lebih serius, dan mulai mengenalkan satu sama lain ke keluarga besar.</p>
+                        </div>
+                    </div>
+
+                    <!-- Item 3 -->
+                    <div class="flex gap-4 items-start">
+                        <div class="premium-polaroid w-24 shrink-0 transform -rotate-1 shadow-[0_5px_15px_rgba(0,0,0,0.1)] p-1 pb-4">
+                            <img src="../../assets/foto/pengantin_3.jpeg" class="w-full aspect-square object-cover photo-filter">
+                        </div>
+                        <div>
+                            <p class="font-script text-xl font-bold text-[#D48A6A]">29 Desember 2025</p>
+                            <p class="font-sans text-sm text-ink/80 mt-1 leading-relaxed">Melangkah ke jenjang lamaran, dan menghitung hari menuju pernikahan impian.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center pt-8 mt-8 border-t border-dashed border-[#D48A6A]/30">
+                    <p class="font-hand text-3xl font-bold text-[#D48A6A]">With love, Bagas & Ayu</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Our Moments Gallery -->
+        <div class="py-16 px-4 bg-board relative border-y-4 border-ink shadow-[inset_0_0_50px_rgba(0,0,0,0.8)] z-0">
+            <h2 class="font-hand text-5xl text-white text-center mb-10 drop-in">Our Moments</h2>
+            
+            <div class="max-w-sm mx-auto drop-in">
+                <div class="premium-polaroid transform rotate-1 hover:rotate-0 w-full mb-4 cursor-default p-4 pb-16">
+                    <div class="masking-tape top-[-10px] left-1/2 -translate-x-1/2"></div>
+                    <div class="relative w-full aspect-[4/3] overflow-hidden rounded shadow-inner">
+                        <img id="mainGalleryImg" src="../../assets/foto/pengantin_1.jpeg" class="w-full h-full object-cover object-top photo-filter transition-opacity duration-300">
+                        <button onclick="prevGallery()" class="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-black/40 text-white rounded-full backdrop-blur hover:bg-black/60 transition z-20">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" class="w-6 h-6"><path d="M15 18l-6-6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </button>
+                        <button onclick="nextGallery()" class="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-black/40 text-white rounded-full backdrop-blur hover:bg-black/60 transition z-20">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" class="w-6 h-6"><path d="M9 18l6-6-6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="flex gap-2 overflow-x-auto py-2 snap-x hide-scroll" id="galleryThumbs">
+                    <img src="../../assets/foto/pengantin_1.jpeg" onclick="setGallery(0)" class="w-16 h-16 object-cover object-top cursor-pointer snap-start border-[3px] border-white shrink-0 transition-all photo-filter">
+                    <img src="../../assets/foto/pengantin_2.jpeg" onclick="setGallery(1)" class="w-16 h-16 object-cover object-top cursor-pointer snap-start opacity-50 shrink-0 transition-all hover:opacity-100 border-[3px] border-white/50 photo-filter">
+                    <img src="../../assets/foto/pengantin_3.jpeg" onclick="setGallery(2)" class="w-16 h-16 object-cover object-top cursor-pointer snap-start opacity-50 shrink-0 transition-all hover:opacity-100 border-[3px] border-white/50 photo-filter">
+                    <img src="../../assets/foto/pengantin_1.jpeg" onclick="setGallery(3)" class="w-16 h-16 object-cover object-top cursor-pointer snap-start opacity-50 shrink-0 transition-all hover:opacity-100 border-[3px] border-white/50 photo-filter">
+                    <img src="../../assets/foto/pengantin_2.jpeg" onclick="setGallery(4)" class="w-16 h-16 object-cover object-top cursor-pointer snap-start opacity-50 shrink-0 transition-all hover:opacity-100 border-[3px] border-white/50 photo-filter">
+                </div>
+            </div>
+        </div>
+
+        <!-- Tanda Kasih (Postcard style) -->
+        <div class="py-20 px-4 relative z-10 bg-[#e0d6c8] shadow-[inset_0_0_50px_rgba(0,0,0,0.1)]">
+            <div class="text-center mb-12 drop-in">
+                <h2 class="font-hand text-5xl text-ink">Tanda Kasih</h2>
+                <p class="font-script text-xl text-ink/70 mt-2">Kirim kado untuk kami</p>
+            </div>
+            
+            <div class="max-w-sm mx-auto flex flex-col gap-8 justify-center">
+                <!-- Card 1 -->
+                <div class="bg-paper p-6 shadow-[0_10px_20px_rgba(0,0,0,0.15)] relative transform -rotate-2 drop-in flex-1 max-w-sm mx-auto w-full">
+                    <div class="masking-tape top-[-15px] right-2 transform rotate-12"></div>
+                    <div class="border-2 border-ink/10 border-dashed p-4 text-center">
+                        <p class="font-serif font-bold text-ink uppercase tracking-widest text-sm mb-2">BCA</p>
+                        <p class="font-script text-4xl text-ink font-bold mb-1" id="rek1">1234567890</p>
+                        <p class="font-hand text-2xl text-ink/60 mb-6">a.n. Bagas Pratama</p>
+                        <button onclick="copyRek('rek1')" class="font-serif italic text-sm bg-ink text-white px-6 py-2 hover:bg-accent transition-colors shadow-md">Salin Rekening</button>
+                    </div>
+                </div>
+                
+                <!-- Card 2 -->
+                <div class="bg-paper p-6 shadow-[0_10px_20px_rgba(0,0,0,0.15)] relative transform rotate-1 drop-in flex-1 max-w-sm mx-auto w-full">
+                    <div class="masking-tape top-[-15px] left-2 transform -rotate-6"></div>
+                    <div class="border-2 border-ink/10 border-dashed p-4 text-center">
+                        <p class="font-serif font-bold text-ink uppercase tracking-widest text-sm mb-2">Mandiri</p>
+                        <p class="font-script text-4xl text-ink font-bold mb-1" id="rek2">0987654321</p>
+                        <p class="font-hand text-2xl text-ink/60 mb-6">a.n. Ayu Lestari</p>
+                        <button onclick="copyRek('rek2')" class="font-serif italic text-sm bg-ink text-white px-6 py-2 hover:bg-accent transition-colors shadow-md">Salin Rekening</button>
+                    </div>
+                </div>
+            </div>
+            <p id="copyToast" class="text-center font-hand text-3xl text-accent mt-8 h-8 opacity-0 transition-opacity"></p>
+        </div>
+
+        <!-- RSVP (Telegram style) -->
+        <div class="py-24 px-4 relative z-10 bg-board">
+            <div class="max-w-lg mx-auto bg-vintage p-8 md:p-12 shadow-[0_20px_40px_rgba(0,0,0,0.5)] transform -rotate-1 relative drop-in">
+                <!-- Pushpin -->
+                <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-slate-800 shadow-[2px_5px_5px_rgba(0,0,0,0.5)] border-2 border-slate-900 z-20 before:content-[''] before:absolute before:top-1 before:left-1 before:w-1.5 before:h-1.5 before:bg-white/40 before:rounded-full"></div>
+                
+                <div class="border-4 border-double border-ink/20 p-6">
+                    <div class="text-center mb-8 border-b-2 border-ink/20 pb-4">
+                        <p class="font-serif uppercase tracking-[0.3em] text-xs font-bold text-ink">Telegram / RSVP</p>
+                        <h2 class="font-hand text-5xl text-ink mt-2">Kehadiran</h2>
+                    </div>
+
+                    <form onsubmit="submitRsvp(event)" class="space-y-6">
+                        <div>
+                            <label class="block font-script text-2xl text-ink mb-1">Nama Tamu:</label>
+                            <input type="text" required class="w-full bg-transparent border-b-2 border-ink/30 py-2 text-ink font-hand text-3xl focus:outline-none focus:border-accent transition-colors" placeholder="Tulis nama anda...">
+                        </div>
+                        
+                        <div>
+                            <label class="block font-script text-2xl text-ink mb-3">Kehadiran:</label>
+                            <div class="flex gap-4">
+                                <label class="flex-1 cursor-pointer">
+                                    <input type="radio" name="attendance" value="Hadir" class="peer hidden" required>
+                                    <div class="w-full py-3 text-center border-2 border-ink/30 text-ink/50 font-serif font-bold text-sm uppercase peer-checked:bg-ink peer-checked:text-white peer-checked:border-ink transition-all">Hadir</div>
+                                </label>
+                                <label class="flex-1 cursor-pointer">
+                                    <input type="radio" name="attendance" value="Tidak Hadir" class="peer hidden">
+                                    <div class="w-full py-3 text-center border-2 border-ink/30 text-ink/50 font-serif font-bold text-sm uppercase peer-checked:bg-ink peer-checked:text-white peer-checked:border-ink transition-all">Maaf</div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block font-script text-2xl text-ink mb-1">Pesan & Doa:</label>
+                            <textarea required rows="3" class="w-full bg-transparent border-b-2 border-ink/30 py-2 text-ink font-hand text-3xl focus:outline-none focus:border-accent transition-colors resize-none" placeholder="Tulis doa anda..."></textarea>
+                        </div>
+
+                        <!-- Wax Seal Submit Button -->
+                        <div class="text-center pt-8">
+                            <button type="submit" class="relative group mx-auto block">
+                                <div class="w-24 h-24 bg-accent rounded-full flex items-center justify-center shadow-[inset_0_-5px_15px_rgba(0,0,0,0.5),0_5px_10px_rgba(0,0,0,0.4)] border border-red-900 group-hover:scale-105 transition-transform mx-auto">
+                                    <span class="font-serif italic text-white text-3xl opacity-80">Cap</span>
+                                </div>
+                                <p class="font-serif text-[10px] font-bold uppercase tracking-widest text-white mt-4 group-hover:text-accent transition-colors">Kirim Balasan</p>
+                            </button>
+                        </div>
+                        <p id="rsvpNote" class="text-center font-hand text-2xl text-white/60 mt-4 h-6"></p>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Feed / Comments -->
+            <div id="ucapanList" class="max-w-lg mx-auto mt-16 space-y-6 max-h-[400px] overflow-y-auto pr-2 hide-scroll drop-in">
+                <!-- Dummy Comment -->
+                <div class="bg-paper p-5 shadow-[0_5px_15px_rgba(0,0,0,0.5)] transform rotate-1">
+                    <div class="flex justify-between items-center border-b border-ink/10 pb-2 mb-3">
+                        <span class="font-script text-3xl font-bold text-ink">Keluarga Besar</span>
+                        <span class="text-xs font-serif uppercase tracking-widest bg-ink text-white px-3 py-1">Hadir</span>
+                    </div>
+                    <p class="font-hand text-3xl text-ink/80 leading-tight">Selamat ya Bagas dan Ayu! Semoga lancar sampai hari H.</p>
+                </div>
+            </div>
+        </div>
+
+    </div> <!-- End Main Content -->
+
+    </div> <!-- End App Wrap -->
+
+    <!-- Audio -->
+    <audio id="bg-music" loop>
+        <source src="../../assets/music/gamelan-jawa.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        function openBook() {
+            const btn = document.querySelector('.swinging');
+            btn.style.animation = 'none';
+            btn.classList.add('scale-90', 'opacity-50');
+            
+            const mainContent = document.getElementById('mainContent');
+            mainContent.classList.remove('hidden');
+            
+            document.getElementById('bg-music').play().catch(()=>{});
+            
+            // Initial animation trigger
+            setTimeout(() => {
+                window.scrollBy({
+                    top: window.innerHeight * 0.9,
+                    behavior: 'smooth'
+                });
+                document.querySelectorAll('.drop-in').forEach(el => observer.observe(el));
+            }, 300);
+        }
+
+        // Gallery Carousel Logic
+        const galleryImages = [
+            '../../assets/foto/pengantin_1.jpeg',
+            '../../assets/foto/pengantin_2.jpeg',
+            '../../assets/foto/pengantin_3.jpeg',
+            '../../assets/foto/pengantin_1.jpeg',
+            '../../assets/foto/pengantin_2.jpeg'
+        ];
+        let currentGalIdx = 0;
+        
+        function updateGallery(){
+            const mainImg = document.getElementById('mainGalleryImg');
+            const thumbs = document.getElementById('galleryThumbs') ? document.getElementById('galleryThumbs').children : [];
+            if(!mainImg) return;
+            mainImg.src = galleryImages[currentGalIdx];
+            Array.from(thumbs).forEach((t, i) => {
+                if(i === currentGalIdx){
+                    t.classList.add('border-white');
+                    t.classList.remove('opacity-50', 'border-white/50');
+                } else {
+                    t.classList.remove('border-white');
+                    t.classList.add('opacity-50', 'border-white/50');
+                }
+            });
+            const container = document.getElementById('galleryThumbs');
+            if(container && thumbs[currentGalIdx]){
+                const thumb = thumbs[currentGalIdx];
+                const targetLeft = thumb.offsetLeft - (container.clientWidth / 2) + (thumb.clientWidth / 2);
+                container.scrollTo({ left: targetLeft, behavior: 'smooth' });
+            }
+        }
+        function nextGallery(){ currentGalIdx = (currentGalIdx + 1) % galleryImages.length; updateGallery(); }
+        function prevGallery(){ currentGalIdx = (currentGalIdx - 1 + galleryImages.length) % galleryImages.length; updateGallery(); }
+        function setGallery(idx){ currentGalIdx = idx; updateGallery(); }
+
+        // Copy Rekening
+        function copyRek(id) {
+            const text = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const toast = document.getElementById('copyToast');
+                toast.innerText = 'Nomor rekening berhasil disalin!';
+                toast.style.opacity = '1';
+                setTimeout(() => toast.style.opacity = '0', 2000);
+            });
+        }
+
+        // RSVP Submit
+        function submitRsvp(e) {
+            e.preventDefault();
+            const form = e.target;
+            const name = form.querySelector('input[type="text"]').value;
+            const msg = form.querySelector('textarea').value;
+            const attend = form.querySelector('input[name="attendance"]:checked').value;
+            
+            const item = document.createElement('div');
+            item.className = 'bg-paper p-5 shadow-[0_5px_15px_rgba(0,0,0,0.5)] transform ' + (Math.random() > 0.5 ? 'rotate-1' : '-rotate-1') + ' stamp-in active mt-6';
+            item.innerHTML = `
+                <div class="flex justify-between items-center border-b border-ink/10 pb-2 mb-3">
+                    <span class="font-script text-3xl font-bold text-ink">${name}</span>
+                    <span class="text-xs font-serif uppercase tracking-widest bg-ink text-white px-3 py-1">${attend}</span>
+                </div>
+                <p class="font-hand text-3xl text-ink/80 leading-tight">${msg}</p>
+            `;
+            
+            const list = document.getElementById('ucapanList');
+            list.insertBefore(item, list.firstChild);
+            
+            document.getElementById('rsvpNote').textContent = 'Pesan berhasil dikirim!';
+            form.reset();
+            
+            setTimeout(() => {
+                document.getElementById('rsvpNote').textContent = '';
+            }, 3000);
+        }
+
+        // Intersection Observer for bouncy drop animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        // Observe initial elements
+        document.querySelectorAll('.stamp-in').forEach(el => observer.observe(el));
+        
+        // Setup 3D Tilt effect on Polaroids based on mouse movement
+        document.addEventListener('mousemove', (e) => {
+            document.querySelectorAll('.premium-polaroid:hover').forEach(el => {
+                const rect = el.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -15; // Max 15deg
+                const rotateY = ((x - centerX) / centerX) * 15;
+                
+                el.style.transform = `translateY(-10px) scale(1.02) perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+        });
+        
+        document.addEventListener('mouseout', (e) => {
+            document.querySelectorAll('.premium-polaroid').forEach(el => {
+                el.style.transform = ''; // reset on leave
+            });
+        });
+    </script>
+</body>
+</html>

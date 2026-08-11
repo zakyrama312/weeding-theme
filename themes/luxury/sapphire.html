@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Luxury Elegance - Wedding Theme</title>
+    <title>Sapphire Luxury Elegance - Wedding Theme</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
@@ -15,10 +15,10 @@
                         sans: ['Montserrat', 'sans-serif'],
                     },
                     colors: {
-                        charcoal: '#151515',
-                        gold: '#D4AF37',
-                        ivory: '#FAF9F6',
-                        'gold-light': '#E5C07B',
+                        charcoal: '#577184', /* using slate blue */
+                        gold: '#FFFFFF',     /* white instead of gold */
+                        ivory: '#FFFFFF',
+                        'gold-light': '#E2E8F0',
                     }
                 }
             }
@@ -26,7 +26,7 @@
     </script>
     <style>
         body {
-            background-color: #151515;
+            background-color: #577184;
             color: #FAF9F6;
             overflow-x: hidden;
         }
@@ -36,7 +36,7 @@
             position: fixed;
             inset: 0;
             z-index: 100;
-            background: #151515;
+            background: #577184;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -52,7 +52,7 @@
             position: absolute;
             inset: 0;
             background-size: cover;
-            background-position: center;
+            background-position: top center;
             opacity: 0.4;
             transform: scale(1.1);
             transition: transform 10s ease-out;
@@ -83,18 +83,18 @@
                 bottom: 0;
                 width: calc(100% - 420px);
                 background-size: cover;
-                background-position: center;
+                background-position: top center;
             }
             .desktop-fixed::after {
                 content: '';
                 position: absolute;
                 inset: 0;
-                background: linear-gradient(to right, rgba(21,21,21,0.2), rgba(21,21,21,1));
+                background: linear-gradient(to right, rgba(87,113,132,0.2), rgba(87,113,132,1));
             }
             .mobile-scroll {
                 margin-left: auto;
                 width: 420px;
-                background-color: #151515;
+                background-color: #577184;
                 box-shadow: -20px 0 50px rgba(0,0,0,0.5);
                 z-index: 10;
             }
@@ -113,17 +113,17 @@
         
         /* Bottom Nav */
         .glass-nav {
-            background: rgba(21, 21, 21, 0.7);
+            background: rgba(87, 113, 132, 0.7);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
         }
         
         /* RSVP Custom Radio */
         .rsvp-radio input:checked + div {
-            background-color: #D4AF37;
-            color: #151515;
-            border-color: #D4AF37;
+            background-color: #FFFFFF;
+            color: #577184;
+            border-color: #FFFFFF;
         }
         
         .custom-scrollbar::-webkit-scrollbar {
@@ -133,8 +133,15 @@
             background: rgba(255,255,255,0.05);
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: rgba(212, 175, 55, 0.5);
+            background: rgba(255, 255, 255, 0.5);
             border-radius: 10px;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
     </style>
 </head>
@@ -142,11 +149,11 @@
 
     <!-- Cover Screen -->
     <div id="cover-screen">
-        <div class="cover-bg" style="background-image: url('../../assets/foto/nikah.jpeg');"></div>
+        <div class="cover-bg" style="background-image: url('../../assets/foto/pengantin_1.jpeg');"></div>
         <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/50 to-transparent"></div>
         <div class="relative z-10 text-center px-6 w-full max-w-md mx-auto flex flex-col items-center justify-end h-full pb-24">
             <p class="font-sans text-[10px] tracking-[0.3em] text-gold uppercase mb-6">The Wedding Of</p>
-            <h1 class="font-serif text-5xl md:text-6xl text-ivory mb-12">Putri & Andika</h1>
+            <h1 class="font-['Great_Vibes'] text-6xl md:text-7xl text-ivory mb-12">Habib & Raisa</h1>
             
             <p class="font-sans text-xs text-gray-400 mb-2">Kepada Yth. Bapak/Ibu/Saudara/i</p>
             <p class="font-serif text-2xl text-ivory italic mb-12">Tamu Undangan</p>
@@ -163,10 +170,10 @@
 
     <div class="layout-wrapper">
         <!-- Desktop Fixed Left -->
-        <div class="desktop-fixed" style="background-image: url('../../assets/foto/nikah.jpeg');">
+        <div class="desktop-fixed" style="background-image: url('../../assets/foto/pengantin_1.jpeg');">
             <div class="absolute inset-0 flex flex-col items-center justify-center z-10">
                 <p class="font-sans text-xs tracking-[0.4em] text-gold uppercase mb-6">The Wedding Of</p>
-                <h1 class="font-serif text-7xl text-ivory">Putri <span class="text-gold italic">&</span> Andika</h1>
+                <h1 class="font-serif text-7xl text-ivory">Raisa <span class="text-gold italic">&</span> Habib</h1>
             </div>
         </div>
 
@@ -175,7 +182,7 @@
             
             <!-- Hero Section -->
             <section id="hero" class="relative min-h-[100svh] flex flex-col items-center justify-center py-20 px-6 text-center">
-                <div class="absolute inset-0 bg-cover bg-center opacity-30" style="background-image: url('../../assets/foto/nikah.jpeg');"></div>
+                <div class="absolute inset-0 bg-cover bg-center opacity-30" style="background-image: url('../../assets/foto/pengantin_1.jpeg');"></div>
                 <div class="absolute inset-0 bg-gradient-to-b from-charcoal/20 via-charcoal/80 to-charcoal"></div>
                 
                 <div class="relative z-10 flex flex-col items-center justify-between h-full min-h-[80vh]">
@@ -190,7 +197,7 @@
                     </div>
                     
                     <div class="my-auto reveal" style="transition-delay: 200ms;">
-                        <h2 class="font-serif text-5xl md:text-6xl text-ivory leading-tight">Putri<br><span class="text-gold italic">&</span><br>Andika</h2>
+                        <h2 class="font-serif text-5xl md:text-6xl text-ivory leading-tight">Raisa<br><span class="text-gold italic">&</span><br>Habib</h2>
                     </div>
 
                     <div class="mt-auto max-w-sm reveal" style="transition-delay: 400ms;">
@@ -202,7 +209,7 @@
 
             <!-- Couple Section -->
             <section id="couple" class="py-24 px-6 relative">
-                <div class="absolute inset-0 bg-cover bg-center opacity-20" style="background-image: url('../../assets/foto/nikah.jpeg');"></div>
+                <div class="absolute inset-0 bg-cover bg-center opacity-20" style="background-image: url('../../assets/foto/pengantin_1.jpeg');"></div>
                 <div class="absolute inset-0 bg-gradient-to-b from-charcoal via-charcoal/80 to-charcoal"></div>
                 
                 <div class="relative z-10 text-center mb-16 reveal">
@@ -213,11 +220,11 @@
                 <!-- Bride -->
                 <div class="relative z-10 flex flex-col items-center text-center mb-16 reveal">
                     <div class="w-48 h-64 rounded-t-full overflow-hidden border border-gold/30 p-2 mb-6 bg-charcoal/30 backdrop-blur-sm">
-                        <img src="../../assets/foto/nikah.jpeg" class="w-full h-full object-cover rounded-t-full" alt="Bride">
+                        <img src="../../assets/foto/pengantin_cewe.jpeg" class="w-full h-full object-cover object-top rounded-t-full" alt="Bride">
                     </div>
                     <p class="font-sans text-[10px] tracking-[0.3em] text-gold uppercase mb-3">The Bride</p>
-                    <h3 class="font-serif text-3xl text-ivory mb-4">Putri Cantika Sari</h3>
-                    <p class="font-sans text-xs text-gray-400 leading-relaxed max-w-xs mx-auto">Putri pertama dari pasangan<br>Bapak Abdul Rozak & Ibu Adelia Marni</p>
+                    <h3 class="font-serif text-3xl text-ivory mb-4">Raisa Cantika Sari</h3>
+                    <p class="font-sans text-xs text-gray-400 leading-relaxed max-w-xs mx-auto">Raisa pertama dari pasangan<br>Bapak Abdul Rozak & Ibu Adelia Marni</p>
                 </div>
 
                 <div class="relative z-10 text-center font-serif italic text-4xl text-gold mb-16 reveal">&</div>
@@ -225,16 +232,16 @@
                 <!-- Groom -->
                 <div class="relative z-10 flex flex-col items-center text-center reveal">
                     <div class="w-48 h-64 rounded-t-full overflow-hidden border border-gold/30 p-2 mb-6 bg-charcoal/30 backdrop-blur-sm">
-                        <img src="../../assets/foto/nikah.jpeg" class="w-full h-full object-cover rounded-t-full" alt="Groom">
+                        <img src="../../assets/foto/pengantin_cowo.jpeg" class="w-full h-full object-cover object-top rounded-t-full" alt="Groom">
                     </div>
                     <p class="font-sans text-[10px] tracking-[0.3em] text-gold uppercase mb-3">The Groom</p>
-                    <h3 class="font-serif text-3xl text-ivory mb-4">Andika Pratama</h3>
+                    <h3 class="font-serif text-3xl text-ivory mb-4">Habib Pratama</h3>
                     <p class="font-sans text-xs text-gray-400 leading-relaxed max-w-xs mx-auto">Putra pertama dari pasangan<br>Bapak Deni Bastian & Ibu Aisha Dania</p>
                 </div>
             </section>
 
             <!-- Events Section -->
-            <section id="events" class="py-24 px-6 relative bg-[#1A1A1A]">
+            <section id="events" class="py-24 px-6 relative bg-[#455c6c]">
                 <div class="text-center mb-16 reveal">
                     <p class="font-sans text-[10px] tracking-[0.3em] text-gold uppercase mb-4">Wedding Event</p>
                     <h2 class="font-serif text-4xl text-ivory">Rangkaian Acara</h2>
@@ -246,9 +253,9 @@
                         <!-- Carousel Top -->
                         <div class="relative w-full h-56">
                             <div class="flex overflow-x-auto snap-x snap-mandatory h-full custom-scrollbar" style="scroll-snap-type: x mandatory;">
-                                <img src="../../assets/foto/nikah.jpeg" class="w-full h-full object-cover shrink-0 snap-center" alt="Gallery">
-                                <img src="../../assets/foto/nikah.jpeg" class="w-full h-full object-cover shrink-0 snap-center" alt="Gallery">
-                                <img src="../../assets/foto/nikah.jpeg" class="w-full h-full object-cover shrink-0 snap-center" alt="Gallery">
+                                <img src="../../assets/foto/pengantin_1.jpeg" class="w-full h-full object-cover object-top shrink-0 snap-center" alt="Gallery">
+                                <img src="../../assets/foto/pengantin_2.jpeg" class="w-full h-full object-cover object-top shrink-0 snap-center" alt="Gallery">
+                                <img src="../../assets/foto/pengantin_3.jpeg" class="w-full h-full object-cover object-top shrink-0 snap-center" alt="Gallery">
                             </div>
                             <!-- Helper text for scroll -->
                             <div class="absolute bottom-3 right-4 font-sans text-[8px] tracking-[0.2em] text-white/80 bg-charcoal/40 px-2 py-1 rounded-full pointer-events-none backdrop-blur-sm">
@@ -259,39 +266,39 @@
                         <!-- Content Bottom -->
                         <div class="flex">
                             <!-- Left Side (Dark, Vertical Text) -->
-                            <div class="w-16 bg-[#2d2a26] text-white flex items-center justify-center relative min-h-[300px]">
+                            <div class="w-16 bg-[#3e5668] text-white flex items-center justify-center relative min-h-[300px]">
                                 <h3 class="font-serif text-2xl tracking-[0.1em] transform -rotate-90 absolute whitespace-nowrap text-ivory">Akad Nikah</h3>
                             </div>
                             
                             <!-- Right Side (Light) -->
-                            <div class="flex-1 p-6 text-[#2d2a26] text-left flex flex-col justify-center">
+                            <div class="flex-1 p-6 text-[#3e5668] text-left flex flex-col justify-center">
                                 <!-- Date Row -->
                                 <div class="flex items-center gap-4 mb-4">
-                                    <span class="font-serif text-[56px] leading-none text-[#5e5852]">28</span>
-                                    <div class="flex flex-col font-sans text-[10px] tracking-widest text-[#5e5852] uppercase font-semibold leading-relaxed">
+                                    <span class="font-serif text-[56px] leading-none text-[#64748b]">28</span>
+                                    <div class="flex flex-col font-sans text-[10px] tracking-widest text-[#64748b] uppercase font-semibold leading-relaxed">
                                         <span>Minggu</span>
                                         <span>Desember</span>
                                         <span>2027</span>
                                     </div>
                                 </div>
                                 
-                                <hr class="border-[#d5cdc4] mb-5">
+                                <hr class="border-[#cbd5e1] mb-5">
                                 
                                 <!-- Time -->
-                                <div class="flex items-center gap-2 mb-6 font-sans text-[11px] font-bold tracking-wider text-[#5e5852]">
+                                <div class="flex items-center gap-2 mb-6 font-sans text-[11px] font-bold tracking-wider text-[#64748b]">
                                     <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path></svg>
                                     08:00 WIB
                                 </div>
                                 
                                 <!-- Location -->
                                 <div class="mb-6">
-                                    <h4 class="font-sans text-[11px] uppercase tracking-[0.15em] font-bold text-[#6f5b3e] mb-2">Lokasi Acara</h4>
-                                    <p class="font-sans font-bold text-[13px] text-[#2d2a26]">Menara 165</p>
-                                    <p class="font-sans text-[10px] text-[#5e5852] mt-1 pr-4 leading-relaxed">Jl. TB Simatupang Jakarta Selatan</p>
+                                    <h4 class="font-sans text-[11px] uppercase tracking-[0.15em] font-bold text-[#475569] mb-2">Lokasi Acara</h4>
+                                    <p class="font-sans font-bold text-[13px] text-[#3e5668]">Menara 165</p>
+                                    <p class="font-sans text-[10px] text-[#64748b] mt-1 pr-4 leading-relaxed">Jl. TB Simatupang Jakarta Selatan</p>
                                 </div>
                                 
                                 <!-- Map Button -->
-                                <a href="#" class="inline-flex items-center justify-center gap-2 border border-[#2d2a26] px-4 py-2 font-sans text-[10px] font-bold uppercase tracking-[0.15em] text-[#2d2a26] hover:bg-[#2d2a26] hover:text-white transition-colors w-max">
+                                <a href="#" class="inline-flex items-center justify-center gap-2 border border-[#3e5668] px-4 py-2 font-sans text-[10px] font-bold uppercase tracking-[0.15em] text-[#3e5668] hover:bg-[#3e5668] hover:text-white transition-colors w-max">
                                     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                                     Google Maps
                                 </a>
@@ -304,9 +311,9 @@
                         <!-- Carousel Top -->
                         <div class="relative w-full h-56">
                             <div class="flex overflow-x-auto snap-x snap-mandatory h-full custom-scrollbar" style="scroll-snap-type: x mandatory;">
-                                <img src="../../assets/foto/nikah.jpeg" class="w-full h-full object-cover shrink-0 snap-center" alt="Gallery">
-                                <img src="../../assets/foto/nikah.jpeg" class="w-full h-full object-cover shrink-0 snap-center" alt="Gallery">
-                                <img src="../../assets/foto/nikah.jpeg" class="w-full h-full object-cover shrink-0 snap-center" alt="Gallery">
+                                <img src="../../assets/foto/pengantin_3.jpeg" class="w-full h-full object-cover object-top shrink-0 snap-center" alt="Gallery">
+                                <img src="../../assets/foto/pengantin_2.jpeg" class="w-full h-full object-cover object-top shrink-0 snap-center" alt="Gallery">
+                                <img src="../../assets/foto/pengantin_1.jpeg" class="w-full h-full object-cover object-top shrink-0 snap-center" alt="Gallery">
                             </div>
                             <!-- Swipe helper now on the left -->
                             <div class="absolute bottom-3 left-4 font-sans text-[8px] tracking-[0.2em] text-white/80 bg-charcoal/40 px-2 py-1 rounded-full pointer-events-none backdrop-blur-sm">
@@ -317,39 +324,39 @@
                         <!-- Content Bottom -->
                         <div class="flex flex-row-reverse">
                             <!-- Right Side (Dark, Vertical Text) -->
-                            <div class="w-16 bg-[#2d2a26] text-white flex items-center justify-center relative min-h-[300px]">
+                            <div class="w-16 bg-[#3e5668] text-white flex items-center justify-center relative min-h-[300px]">
                                 <h3 class="font-serif text-2xl tracking-[0.1em] transform rotate-90 absolute whitespace-nowrap text-ivory">Resepsi</h3>
                             </div>
                             
                             <!-- Left Side (Light) -->
-                            <div class="flex-1 p-6 text-[#2d2a26] text-left flex flex-col justify-center">
+                            <div class="flex-1 p-6 text-[#3e5668] text-left flex flex-col justify-center">
                                 <!-- Date Row -->
                                 <div class="flex items-center gap-4 mb-4">
-                                    <span class="font-serif text-[56px] leading-none text-[#5e5852]">28</span>
-                                    <div class="flex flex-col font-sans text-[10px] tracking-widest text-[#5e5852] uppercase font-semibold leading-relaxed">
+                                    <span class="font-serif text-[56px] leading-none text-[#64748b]">28</span>
+                                    <div class="flex flex-col font-sans text-[10px] tracking-widest text-[#64748b] uppercase font-semibold leading-relaxed">
                                         <span>Minggu</span>
                                         <span>Desember</span>
                                         <span>2027</span>
                                     </div>
                                 </div>
                                 
-                                <hr class="border-[#d5cdc4] mb-5">
+                                <hr class="border-[#cbd5e1] mb-5">
                                 
                                 <!-- Time -->
-                                <div class="flex items-center gap-2 mb-6 font-sans text-[11px] font-bold tracking-wider text-[#5e5852]">
+                                <div class="flex items-center gap-2 mb-6 font-sans text-[11px] font-bold tracking-wider text-[#64748b]">
                                     <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path></svg>
                                     09:00 - 13:00 WIB
                                 </div>
                                 
                                 <!-- Location -->
                                 <div class="mb-6">
-                                    <h4 class="font-sans text-[11px] uppercase tracking-[0.15em] font-bold text-[#6f5b3e] mb-2">Lokasi Acara</h4>
-                                    <p class="font-sans font-bold text-[13px] text-[#2d2a26]">Menara 165</p>
-                                    <p class="font-sans text-[10px] text-[#5e5852] mt-1 pr-4 leading-relaxed">Jl. TB Simatupang Jakarta Selatan</p>
+                                    <h4 class="font-sans text-[11px] uppercase tracking-[0.15em] font-bold text-[#475569] mb-2">Lokasi Acara</h4>
+                                    <p class="font-sans font-bold text-[13px] text-[#3e5668]">Menara 165</p>
+                                    <p class="font-sans text-[10px] text-[#64748b] mt-1 pr-4 leading-relaxed">Jl. TB Simatupang Jakarta Selatan</p>
                                 </div>
                                 
                                 <!-- Map Button -->
-                                <a href="#" class="inline-flex items-center justify-center gap-2 border border-[#2d2a26] px-4 py-2 font-sans text-[10px] font-bold uppercase tracking-[0.15em] text-[#2d2a26] hover:bg-[#2d2a26] hover:text-white transition-colors w-max">
+                                <a href="#" class="inline-flex items-center justify-center gap-2 border border-[#3e5668] px-4 py-2 font-sans text-[10px] font-bold uppercase tracking-[0.15em] text-[#3e5668] hover:bg-[#3e5668] hover:text-white transition-colors w-max">
                                     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                                     Google Maps
                                 </a>
@@ -401,16 +408,29 @@
                     <h2 class="font-serif text-4xl text-ivory">Galeri Foto</h2>
                 </div>
 
-                <div class="grid grid-cols-2 gap-2 reveal">
-                    <img src="../../assets/foto/nikah.jpeg" class="w-full h-48 object-cover col-span-2">
-                    <img src="../../assets/foto/nikah.jpeg" class="w-full h-40 object-cover">
-                    <img src="../../assets/foto/nikah.jpeg" class="w-full h-40 object-cover">
-                    <img src="../../assets/foto/nikah.jpeg" class="w-full h-64 object-cover col-span-2">
+                <div class="reveal">
+                    <div class="relative w-full aspect-[3/4] rounded-xl overflow-hidden mb-3 border border-white/20 shadow-lg">
+                        <img id="mainGalleryImg" src="../../assets/foto/pengantin_1.jpeg" alt="Gallery" class="w-full h-full object-cover object-top">
+                        <button onclick="prevGallery()" class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-black/30 text-white rounded-full backdrop-blur-md hover:bg-black/50 transition">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" class="w-6 h-6"><path d="M15 18l-6-6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </button>
+                        <button onclick="nextGallery()" class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-black/30 text-white rounded-full backdrop-blur-md hover:bg-black/50 transition">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" class="w-6 h-6"><path d="M9 18l6-6-6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </button>
+                    </div>
+                    <div class="flex gap-2 overflow-x-auto py-2 snap-x hide-scrollbar" id="galleryThumbs">
+                        <img src="../../assets/foto/pengantin_1.jpeg" onclick="setGallery(0)" class="w-16 h-16 rounded-lg object-cover object-top cursor-pointer snap-start border-2 border-white shrink-0 transition-all">
+                        <img src="../../assets/foto/pengantin_2.jpeg" onclick="setGallery(1)" class="w-16 h-16 rounded-lg object-cover object-top cursor-pointer snap-start opacity-50 shrink-0 transition-all hover:opacity-100">
+                        <img src="../../assets/foto/pengantin_3.jpeg" onclick="setGallery(2)" class="w-16 h-16 rounded-lg object-cover object-top cursor-pointer snap-start opacity-50 shrink-0 transition-all hover:opacity-100">
+                        <img src="../../assets/foto/pengantin_1.jpeg" onclick="setGallery(3)" class="w-16 h-16 rounded-lg object-cover object-top cursor-pointer snap-start opacity-50 shrink-0 transition-all hover:opacity-100">
+                        <img src="../../assets/foto/pengantin_2.jpeg" onclick="setGallery(4)" class="w-16 h-16 rounded-lg object-cover object-top cursor-pointer snap-start opacity-50 shrink-0 transition-all hover:opacity-100">
+                        <img src="../../assets/foto/pengantin_3.jpeg" onclick="setGallery(5)" class="w-16 h-16 rounded-lg object-cover object-top cursor-pointer snap-start opacity-50 shrink-0 transition-all hover:opacity-100">
+                    </div>
                 </div>
             </section>
             
             <!-- RSVP Section -->
-            <section id="rsvp" class="py-24 px-6 relative bg-[#1A1A1A]">
+            <section id="rsvp" class="py-24 px-6 relative bg-[#455c6c]">
                 <div class="text-center mb-16 reveal">
                     <p class="font-sans text-[10px] tracking-[0.3em] text-gold uppercase mb-4">Reservation</p>
                     <h2 class="font-serif text-4xl text-ivory">Kehadiran & Ucapan</h2>
@@ -453,7 +473,7 @@
                             <h4 class="font-serif text-lg text-gold">Keluarga Besar</h4>
                             <span class="px-2 py-1 bg-gold/10 text-gold border border-gold/20 rounded-full text-[9px] uppercase tracking-wider">Hadir</span>
                         </div>
-                        <p class="font-sans text-xs text-gray-400 leading-relaxed">Selamat menempuh hidup baru Putri dan Andika. Semoga menjadi keluarga yang sakinah mawaddah warahmah.</p>
+                        <p class="font-sans text-xs text-gray-400 leading-relaxed">Selamat menempuh hidup baru Raisa dan Habib. Semoga menjadi keluarga yang sakinah mawaddah warahmah.</p>
                     </div>
                 </div>
             </section>
@@ -461,7 +481,7 @@
             <!-- Footer -->
             <footer class="py-12 bg-charcoal text-center border-t border-gold/10 pb-32">
                 <p class="font-sans text-[10px] tracking-[0.3em] text-gray-500 uppercase mb-4">Terima Kasih</p>
-                <h2 class="font-serif text-3xl text-ivory mb-8">Putri & Andika</h2>
+                <h2 class="font-['Great_Vibes'] text-4xl text-ivory mb-8">Habib & Raisa</h2>
                 <p class="font-sans text-[9px] text-gray-600 tracking-widest uppercase">© 2026 Weeding Theme Builder</p>
             </footer>
 
@@ -605,6 +625,42 @@
                 document.getElementById('rsvpNote').textContent = '*Form ini adalah simulasi tema.';
             }, 3000);
         }
+
+        // Gallery Carousel Logic
+        const galleryImages = [
+            '../../assets/foto/pengantin_1.jpeg',
+            '../../assets/foto/pengantin_2.jpeg',
+            '../../assets/foto/pengantin_3.jpeg',
+            '../../assets/foto/pengantin_1.jpeg',
+            '../../assets/foto/pengantin_2.jpeg',
+            '../../assets/foto/pengantin_3.jpeg'
+        ];
+        let currentGalIdx = 0;
+        
+        function updateGallery(){
+            const mainImg = document.getElementById('mainGalleryImg');
+            const thumbs = document.getElementById('galleryThumbs') ? document.getElementById('galleryThumbs').children : [];
+            if(!mainImg) return;
+            mainImg.src = galleryImages[currentGalIdx];
+            Array.from(thumbs).forEach((t, i) => {
+                if(i === currentGalIdx){
+                    t.classList.add('border-2', 'border-white');
+                    t.classList.remove('opacity-50');
+                } else {
+                    t.classList.remove('border-2', 'border-white');
+                    t.classList.add('opacity-50');
+                }
+            });
+            const container = document.getElementById('galleryThumbs');
+            if(container && thumbs[currentGalIdx]){
+                const thumb = thumbs[currentGalIdx];
+                const targetLeft = thumb.offsetLeft - (container.clientWidth / 2) + (thumb.clientWidth / 2);
+                container.scrollTo({ left: targetLeft, behavior: 'smooth' });
+            }
+        }
+        function nextGallery(){ currentGalIdx = (currentGalIdx + 1) % galleryImages.length; updateGallery(); }
+        function prevGallery(){ currentGalIdx = (currentGalIdx - 1 + galleryImages.length) % galleryImages.length; updateGallery(); }
+        function setGallery(idx){ currentGalIdx = idx; updateGallery(); }
     </script>
 </body>
 </html>
