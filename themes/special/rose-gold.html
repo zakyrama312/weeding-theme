@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>The Wedding of Ayu &amp; Bagas</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#4a2c2a;
+    --blue:#b76e79;
+    --blue-soft:#e0bfb8;
+    --cream:#fdfaf6;
+    --gold:#C7A662;
+    --sage:#c2a89f;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Jost', sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    overflow-x:hidden;
+    padding-bottom:100px;
+  }
+  .font-script{font-family:'Tangerine', cursive;}
+  .font-serif{font-family:'Cormorant Garamond', serif;}
+
+  /* corner ornaments: wrapper handles position + static flip, inner img handles the zoom pulse
+     so the flip is never fought by the animation */
+  .corner-wrap{position:absolute; width:250px; pointer-events:none; z-index:0;}
+  .corner-wrap img{width:100%; display:block; opacity:0.75; animation:pulseZoom 5.5s ease-in-out infinite; filter:brightness(1.05);}
+
+ /* mirrored horizontally from previous version */
+  .corner-tl{top:-18px; left:-18px; transform:scale(-1,-1);}
+  .corner-tr{top:-18px; right:-18px; transform:rotate(-90deg);}
+  .corner-bl{bottom:-18px; left:-18px; transform:scaleX(-1);}
+  .corner-br{bottom:-18px; right:-18px; transform:srotate(-90deg);}
+
+  .corner-tl img{animation-delay:0s;}
+  .corner-tr img{animation-delay:1.2s;}
+  .corner-bl img{animation-delay:0.6s;}
+  .corner-br img{animation-delay:1.8s;}
+
+  @keyframes pulseZoom{
+    0%,100%{ transform:scale(1); }
+    50%{ transform:scale(1.09); }
+  }
+
+  .section-wrap{position:relative; overflow:hidden; z-index:1;}
+
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+    border-radius: 1.5rem;
+    position: relative;
+    z-index: 10;
+  }
+
+  .divider-line{height:1px; background:linear-gradient(90deg, transparent, var(--gold), transparent);}
+
+  .reveal{opacity:0; transform:translateY(24px); transition:opacity 0.9s ease, transform 0.9s ease;}
+  .reveal.show{opacity:1; transform:translateY(0);}
+
+  .petal{position:absolute; top:-10%; opacity:0.85; animation:fall linear infinite; pointer-events:none;}
+  @keyframes fall{
+    0%{transform:translateY(0) rotate(0deg); opacity:0.9;}
+    100%{transform:translateY(110vh) rotate(360deg); opacity:0.2;}
+  }
+
+  #envelope{
+    position:fixed; top:0; bottom:0; right:0; width:100%; z-index:50;
+    background:var(--cream);
+    overflow-y:auto;
+    overflow-x:hidden;
+  }
+  @media(min-width:1024px){ #envelope{ width:420px; } }
+  #envelope.closed-hide{display:none;}
+
+  .btn-primary{
+    background:var(--ink); color:var(--cream);
+    transition:background 0.3s ease, transform 0.2s ease;
+  }
+  .btn-primary:hover{background:var(--blue); transform:translateY(-2px);}
+
+  .nav-dot{width:9px; height:9px; border-radius:9999px; background:var(--blue-soft); transition:all .3s ease;}
+  .nav-dot.active{background:var(--ink); width:22px; border-radius:9999px;}
+
+  ::selection{background:var(--blue-soft); color:var(--ink);}
+
+  .banner-strip{width:100%; max-width:280px; opacity:0.95;}
+  @media(min-width:768px){ .banner-strip{max-width:380px;} }
+
+  /* photo frame: couple photo circle with a floral halo behind it, centered, tilted slightly left */
+  .photo-frame{position:relative; width:340px; height:340px; margin:0 auto; display:flex; align-items:center; justify-content:center;}
+  .photo-frame .corner-top{position:absolute; width:100%; height:100%; top:0; left:0; object-fit:contain; z-index:10; pointer-events:none;}
+  .photo-frame .photo-ring{position:relative; width:180px; height:180px; border-radius:50%; overflow:hidden; background:var(--blue-soft)/40; z-index:2;}
+  .photo-frame .photo-ring img{width:100%; height:100%; object-fit:cover; object-position: top;}
+
+  @keyframes cornerZoom{
+    0%,100%{ transform:scale(1); }
+    50%{ transform:scale(1.12); }
+  }
+
+  @keyframes haloPulse{
+    0%,100%{ transform:rotate(-14deg) scale(1); }
+    50%{ transform:rotate(-14deg) scale(1.09); }
+  }
+
+  .anim-pulse { animation: pulseZoom 5.5s ease-in-out infinite; }
+  .anim-pulse-delay { animation: pulseZoom 5.5s ease-in-out infinite; animation-delay: 2s; }
+
+  /* bottom navbar */
+  #bottomNav{
+    position:fixed; left:50%; transform:translateX(-50%); bottom:env(safe-area-inset-bottom, 24px); z-index:50;
+    margin-bottom: 24px;
+    width:calc(100% - 48px); max-width:360px;
+    background:rgba(255,255,255,0.75);
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+    border:1px solid rgba(255, 255, 255, 0.5);
+    border-radius:9999px;
+    box-shadow:0 12px 40px rgba(31,58,95,0.15);
+    display:flex; justify-content:space-around; align-items:center;
+    padding:12px 8px;
+  }
+  @media(min-width:1024px){
+    #bottomNav{ left:auto; right:30px; transform:none; }
+  }
+  .nav-icon{display:flex; flex-direction:column; align-items:center; gap:4px; color:rgba(31,58,95,0.45); transition:all .3s ease; width:44px;}
+  .nav-icon svg{width:20px; height:20px;}
+  .nav-icon span{font-size:9px; letter-spacing:.05em; text-transform:uppercase; font-weight:500;}
+  .nav-icon.active{color:var(--ink); transform:translateY(-3px);}
+
+  .hide-scrollbar::-webkit-scrollbar { display: none; }
+  .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  input:focus, select:focus, textarea:focus{outline:none; border-color:var(--blue);}
+</style>
+</head>
+<body class="antialiased">
+
+<!-- DESKTOP LEFT SIDE (Fixed) -->
+<div class="hidden lg:flex fixed inset-y-0 left-0 right-[420px] flex-col items-center justify-center bg-[var(--cream)] overflow-hidden border-r border-[var(--blue-soft)]/30">
+  
+  <!-- Ornaments Desktop -->
+  <div class="absolute top-[-40px] left-[-40px] w-96 opacity-80 pointer-events-none" style="transform: scale(-1,-1);"><img src="../../assets/corner-gold.png" class="w-full anim-pulse"></div>
+  <div class="absolute top-[-40px] right-[-40px] w-96 opacity-80 pointer-events-none" style="transform: rotate(-90deg);"><img src="../../assets/corner-gold.png" class="w-full anim-pulse-delay"></div>
+  <div class="absolute bottom-[-40px] left-[-40px] w-96 opacity-80 pointer-events-none" style="transform: scaleX(-1);"><img src="../../assets/corner-gold.png" class="w-full anim-pulse-delay"></div>
+  <div class="absolute bottom-[-40px] right-[-40px] w-96 opacity-80 pointer-events-none" style="transform: scaleY(-1) rotate(-90deg);"><img src="../../assets/corner-gold.png" class="w-full anim-pulse"></div>
+
+  <!-- Background subtle texture -->
+  <div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image: radial-gradient(var(--ink) 1px, transparent 1px); background-size: 24px 24px;"></div>
+
+  <div class="text-center relative z-10 flex flex-col items-center">
+    <p class="font-serif tracking-[0.35em] text-sm uppercase text-[var(--ink)] mb-4">The Wedding Of</p>
+    <h1 class="font-script text-8xl text-[var(--ink)] drop-shadow-sm">Ayu &amp; Bagas</h1>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="absolute right-8 top-1/2 -translate-y-1/2 flex flex-col items-center gap-2 text-[var(--ink)]/40">
+    <span class="text-[10px] tracking-[0.3em] uppercase" style="writing-mode: vertical-rl;">Scroll</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" class="w-4 h-4 animate-bounce"><path d="M12 5v14M19 12l-7 7-7-7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+</div>
+
+<!-- MAIN APP CONTAINER (Scrollable) -->
+<div id="app-wrap" class="w-full lg:w-[420px] lg:ml-auto min-h-screen relative bg-[var(--cream)] shadow-[-10px_0_30px_rgba(0,0,0,0.1)]">
+
+<!-- floating petals -->
+<div id="petals" class="fixed inset-y-0 right-0 w-full lg:w-[420px] pointer-events-none z-40 overflow-hidden"></div>
+
+<!-- ================= ENVELOPE / COVER ================= -->
+<div id="envelope">
+  <div class="relative max-w-md w-full mx-auto min-h-full flex flex-col p-4">
+    <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+      <div class="corner-wrap corner-tl"><img src="../../assets/corner-gold.png" alt="" class="corner-img"></div>
+      <div class="corner-wrap corner-br"><img src="../../assets/corner-gold.png" alt="" class="corner-img"></div>
+    </div>
+
+    <div class="glass-panel w-full text-center py-10 px-4 my-auto relative z-10">
+      <p class="font-serif tracking-[0.35em] text-[10px] text-[var(--blue)] uppercase mb-4">The Wedding Of</p>
+
+      <div class="photo-frame">
+        <img src="../../assets/bundarcorner.png" alt="" class="corner-top">
+        <div class="photo-ring">
+           <img src="../../assets/foto/pengantin_1.jpeg" alt="Foto Pasangan"> 
+          <div class="w-full h-full flex items-center justify-center text-[10px] text-[var(--ink)]/40 text-center px-4 hidden">Foto Pasangan</div>
+        </div>
+      </div>
+
+      <h1 class="font-script text-6xl leading-none mt-4" style="color:var(--ink)">Ayu &amp; Bagas</h1>
+      <div class="divider-line w-20 mx-auto my-4"></div>
+      <p class="font-serif text-xs text-[var(--ink)]/70 mb-1">Kepada Yth. Bapak/Ibu/Saudara/i</p>
+      <p id="guestName" class="font-serif text-lg italic mb-1">Tamu Undangan</p>
+      <p class="text-[10px] text-[var(--ink)]/50 mb-6">*Mohon maaf apabila ada kesalahan penulisan</p>
+
+      <button id="openBtn" class="btn-primary font-serif tracking-widest text-xs uppercase px-8 py-2.5 rounded-full shadow-md">
+        Buka Undangan
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= MAIN CONTENT ================= -->
+<div id="main" class="hidden">
+
+  <!-- audio control -->
+  <button id="audioBtn" class="fixed top-5 right-5 z-50 w-11 h-11 rounded-full bg-[var(--ink)] text-[var(--cream)] flex items-center justify-center shadow-lg">
+    <span id="audioIcon">&#9835;</span>
+  </button>
+  <audio id="bgAudio" loop>
+    <source src="../../assets/music/weeding.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- bottom icon navbar -->
+  <nav id="bottomNav">
+    <a href="#hero" class="nav-icon" data-nav>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 11.5 12 4l8 7.5"/><path d="M6 10v9h12v-9"/></svg>
+      <span>Home</span>
+    </a>
+    <a href="#mempelai" class="nav-icon" data-nav>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 20s-7-4.4-9.5-9C.8 7.4 3 4 6.5 4 9 4 11 6 12 7.3 13 6 15 4 17.5 4 21 4 23.2 7.4 21.5 11 19 15.6 12 20 12 20Z"/></svg>
+      <span>Pasangan</span>
+    </a>
+    <a href="#acara" class="nav-icon" data-nav>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="7" width="16" height="13" rx="1.5"/><path d="M4 11h16"/><path d="M8 4v5M16 4v5"/></svg>
+      <span>Acara</span>
+    </a>
+    <a href="#lovestory" class="nav-icon" data-nav>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+      <span>Cerita</span>
+    </a>
+    <a href="#galeri" class="nav-icon" data-nav>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.2"/></svg>
+      <span>Galeri</span>
+    </a>
+    <a href="#kado" class="nav-icon" data-nav>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="9" width="16" height="11" rx="1"/><path d="M4 9h16v4H4z"/><path d="M12 9v11"/><path d="M12 9c-1.4 0-2.6-1.4-2.6-2.7C9.4 5 10.4 4 11.5 4c1.4 0 2.5 2.3.5 5Z"/><path d="M12 9c1.4 0 2.6-1.4 2.6-2.7C14.6 5 13.6 4 12.5 4c-1.4 0-2.5 2.3-.5 5Z"/></svg>
+      <span>Kado</span>
+    </a>
+    <a href="#ucapan" class="nav-icon" data-nav>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 5h16v11H9l-4 3.5V16H4z"/></svg>
+      <span>Ucapan</span>
+    </a>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero" class="relative min-h-screen flex flex-col items-center justify-center px-4 py-20 overflow-hidden">
+    <div class="corner-wrap corner-tr"><img src="../../assets/corner-gold.png" alt="" class="corner-img"></div>
+    <div class="corner-wrap corner-bl"><img src="../../assets/corner-gold.png" alt="" class="corner-img"></div>
+    
+    <div class="glass-panel w-full max-w-md mx-auto text-center px-6 py-16">
+      <p class="font-serif tracking-[0.4em] text-xs uppercase text-[var(--blue)] mb-6 reveal">The Wedding Of</p>
+
+      <div class="photo-frame mb-6 reveal">
+        <img src="../../assets/bundarcorner.png" alt="" class="corner-top">
+        <div class="photo-ring">
+          <!-- ganti div ini dengan  -->
+          <img src="../../assets/foto/pengantin_2.jpeg">
+          <!-- untuk foto asli -->
+          <div class="w-full h-full flex items-center justify-center text-[10px] text-[var(--ink)]/40 text-center px-4">Foto Pasangan</div>
+        </div>
+      </div>
+
+      <h1 class="font-script text-7xl md:text-8xl mb-4 reveal" style="color:var(--ink)">Ayu &amp; Bagas</h1>
+      <p class="font-serif text-lg text-[var(--ink)]/80 reveal">Kamis, 04 Juni 2026</p>
+      <div class="divider-line w-32 mx-auto my-8 reveal"></div>
+      <p class="font-serif text-sm text-[var(--ink)]/60 reveal">Dengan penuh syukur, kami mengundang Bapak/Ibu/Saudara/i untuk hadir merayakan hari bahagia kami</p>
+    </div>
+  </section>
+
+  <!-- QUOTE -->
+  <section class="relative px-4 py-12 overflow-hidden">
+    <div class="glass-panel w-full max-w-md mx-auto text-center px-6 py-12">
+      <p class="font-serif italic text-lg md:text-2xl mx-auto leading-relaxed reveal">
+        "Dan di antara tanda-tanda kebesaran-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang."
+      </p>
+      <p class="font-serif text-sm text-[var(--blue)] mt-6 reveal">Q.S. Ar-Rum : 21</p>
+    </div>
+  </section>
+
+  <!-- MEMPELAI -->
+  <section id="mempelai" class="relative px-4 py-16 overflow-hidden">
+    <div class="corner-wrap corner-tr"><img src="../../assets/corner-gold.png" alt="" class="corner-img"></div>
+    <div class="corner-wrap corner-bl"><img src="../../assets/corner-gold.png" alt="" class="corner-img"></div>
+    
+    <div class="glass-panel w-full max-w-md mx-auto text-center px-4 py-12">
+      <p class="font-serif text-lg text-[var(--ink)] font-semibold mb-4 reveal">Assalamu'alaikum Warahmatullahi Wabarakatuh</p>
+      <p class="font-serif text-sm text-[var(--ink)]/80 mx-auto mb-10 reveal">Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Semoga ridho-Nya senantiasa mengiringi pernikahan kami.</p>
+
+      <div class="flex flex-col gap-6 items-center">
+        <div class="reveal">
+          <div class="w-44 h-56 mx-auto rounded-t-full rounded-b-xl border-[3px] border-[var(--gold)] shadow-sm flex items-center justify-center overflow-hidden">
+            <img src="../../assets/foto/pengantincewe.jpg" alt="Ayu Lestari" class="w-full h-full object-cover">
+          </div>
+          <h3 class="font-script text-5xl mt-5 mb-1" style="color:var(--ink)">Ayu Lestari</h3>
+          <p class="font-serif text-sm font-semibold text-[var(--ink)] mb-0.5">Putri Pertama dari</p>
+          <p class="font-serif text-[13px] text-[var(--ink)]/80">Bapak Slamet Riyadi &amp; Ibu Wulandari</p>
+        </div>
+        
+        <div class="reveal my-2">
+          <span class="font-script text-5xl text-[var(--gold)]">&amp;</span>
+        </div>
+
+        <div class="reveal">
+          <div class="w-44 h-56 mx-auto rounded-t-full rounded-b-xl border-[3px] border-[var(--gold)] shadow-sm flex items-center justify-center overflow-hidden">
+            <img src="../../assets/foto/pengantincowo.jpg" alt="Bagas Pratama" class="w-full h-full object-cover">
+          </div>
+          <h3 class="font-script text-5xl mt-5 mb-1" style="color:var(--ink)">Bagas Pratama</h3>
+          <p class="font-serif text-sm font-semibold text-[var(--ink)] mb-0.5">Putra Kedua dari</p>
+          <p class="font-serif text-[13px] text-[var(--ink)]/80">Bapak Hartono &amp; Ibu Kartika</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACARA -->
+  <section id="acara" class="relative px-4 py-16 overflow-hidden">
+    <div class="corner-wrap corner-tl"><img src="../../assets/corner-gold.png" alt="" class="corner-img"></div>
+    <div class="corner-wrap corner-br"><img src="../../assets/corner-gold.png" alt="" class="corner-img"></div>
+    
+    <div class="glass-panel w-full max-w-md mx-auto text-center px-6 py-16">
+      <p class="font-serif tracking-[0.35em] text-xs uppercase text-[var(--blue)] mb-8 reveal">Save The Date</p>
+
+      <!-- countdown -->
+      <div id="countdown" class="flex justify-center gap-4 mb-14 reveal">
+        <div class="text-center">
+          <div class="text-3xl font-serif" id="cd-days">00</div>
+          <div class="text-[10px] tracking-widest uppercase text-[var(--ink)]/50">Hari</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl font-serif" id="cd-hours">00</div>
+          <div class="text-[10px] tracking-widest uppercase text-[var(--ink)]/50">Jam</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl font-serif" id="cd-mins">00</div>
+          <div class="text-[10px] tracking-widest uppercase text-[var(--ink)]/50">Menit</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl font-serif" id="cd-secs">00</div>
+          <div class="text-[10px] tracking-widest uppercase text-[var(--ink)]/50">Detik</div>
+        </div>
+      </div>
+
+      <div class="grid gap-8">
+        <div class="reveal border border-[var(--blue-soft)]/50 rounded-xl p-8 bg-white/30">
+          <h3 class="font-serif text-2xl mb-1">Akad Nikah</h3>
+          <p class="font-script text-4xl my-2 text-[var(--blue)]">Kamis, 04 Juni 2026</p>
+          <p class="text-sm text-[var(--ink)]/70 mb-4">08:00 WIB &ndash; Selesai</p>
+          <p class="text-sm text-[var(--ink)]/60 mb-4">Jl. Melati No. 12, Kec. Setiabudi, Kab. Bandung</p>
+          <a href="https://maps.google.com" target="_blank" class="inline-block text-xs tracking-widest uppercase border-b border-[var(--ink)] pb-1">Google Maps</a>
+        </div>
+        <div class="reveal border border-[var(--blue-soft)]/50 rounded-xl p-8 bg-white/30">
+          <h3 class="font-serif text-2xl mb-1">Resepsi</h3>
+          <p class="font-script text-4xl my-2 text-[var(--blue)]">Kamis, 04 Juni 2026</p>
+          <p class="text-sm text-[var(--ink)]/70 mb-4">11:00 &ndash; 14:00 WIB</p>
+          <p class="text-sm text-[var(--ink)]/60 mb-4">Jl. Melati No. 12, Kec. Setiabudi, Kab. Bandung</p>
+          <a href="https://maps.google.com" target="_blank" class="inline-block text-xs tracking-widest uppercase border-b border-[var(--ink)] pb-1">Google Maps</a>
+        </div>
+      </div>
+
+      <a id="calendarBtn" href="#" target="_blank" class="btn-primary inline-block mt-12 font-serif tracking-widest text-sm uppercase px-8 py-3 rounded-full reveal">Simpan Tanggal</a>
+    </div>
+  </section>
+
+  <!-- LOVE STORY -->
+  <section id="lovestory" class="relative px-4 py-16 overflow-hidden">
+    <div class="corner-wrap corner-tr"><img src="../../assets/corner-gold.png" alt="" class="corner-img"></div>
+    
+    <div class="glass-panel w-full max-w-md mx-auto text-center px-6 py-16">
+      <p class="font-serif tracking-[0.35em] text-xs uppercase text-[var(--blue)] mb-2 reveal">Our Journey</p>
+      <h2 class="font-script text-5xl mb-14 reveal">Love Story</h2>
+
+      <div class="text-left space-y-10">
+        <div class="reveal flex gap-5">
+          <div class="w-2 h-2 rounded-full bg-[var(--gold)] mt-2 shrink-0"></div>
+          <div>
+            <h4 class="font-serif text-xl mb-1">Awal Kisah</h4>
+            <p class="text-sm text-[var(--ink)]/60">Tak ada yang menyangka sebuah pertemuan singkat akan menjadi awal dari segalanya, dipertemukan di waktu yang tak terduga.</p>
+          </div>
+        </div>
+        <div class="reveal flex gap-5">
+          <div class="w-2 h-2 rounded-full bg-[var(--gold)] mt-2 shrink-0"></div>
+          <div>
+            <h4 class="font-serif text-xl mb-1">Saling Mendewasakan</h4>
+            <p class="text-sm text-[var(--ink)]/60">Perjalanan kami bukan hanya tentang kebahagiaan, tapi proses saling mendewasakan dan membangun kepercayaan.</p>
+          </div>
+        </div>
+        <div class="reveal flex gap-5">
+          <div class="w-2 h-2 rounded-full bg-[var(--gold)] mt-2 shrink-0"></div>
+          <div>
+            <h4 class="font-serif text-xl mb-1">Janji Setia</h4>
+            <p class="text-sm text-[var(--ink)]/60">Momen lamaran menjadi bukti nyata kesungguhan hati, kami siap melangkah lebih jauh bersama.</p>
+          </div>
+        </div>
+        <div class="reveal flex gap-5">
+          <div class="w-2 h-2 rounded-full bg-[var(--gold)] mt-2 shrink-0"></div>
+          <div>
+            <h4 class="font-serif text-xl mb-1">Awal Selamanya</h4>
+            <p class="text-sm text-[var(--ink)]/60">Hari ini dua doa menyatu menjadi satu tujuan, mengukir janji suci untuk memulai hidup baru bersama.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERI -->
+  <section id="galeri" class="relative px-4 py-16 overflow-hidden">
+    <div class="corner-wrap corner-tl"><img src="../../assets/corner-gold.png" alt="" class="corner-img"></div>
+    <div class="corner-wrap corner-br"><img src="../../assets/corner-gold.png" alt="" class="corner-img"></div>
+    
+    <div class="glass-panel w-full max-w-md mx-auto text-center p-4">
+      <p class="font-serif tracking-[0.35em] text-xs uppercase text-[var(--blue)] mb-2 mt-8 reveal">Gallery</p>
+      <h2 class="font-script text-5xl mb-8 reveal">Our Moments</h2>
+      
+      <!-- Carousel Container -->
+      <div class="relative bg-white/40 p-2 rounded-2xl shadow-sm border border-white/50 mb-8 reveal">
+        <!-- Main Image -->
+        <div class="relative w-full aspect-[3/4] rounded-xl overflow-hidden mb-2">
+          <img id="mainGalleryImg" src="../../assets/foto/pengantin_1.jpeg" alt="Gallery" class="w-full h-full object-cover">
+          
+          <!-- Arrows -->
+          <button onclick="prevGallery()" class="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center bg-black/20 text-white rounded-full backdrop-blur-sm hover:bg-black/40 transition">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" class="w-5 h-5"><path d="M15 18l-6-6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button onclick="nextGallery()" class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center bg-black/20 text-white rounded-full backdrop-blur-sm hover:bg-black/40 transition">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" class="w-5 h-5"><path d="M9 18l6-6-6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+
+          <!-- Fullscreen icon top-left -->
+          <button class="absolute top-3 left-3 text-white/80 hover:text-white">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" class="w-5 h-5"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+
+        <!-- Thumbnails -->
+        <div class="relative flex gap-2 overflow-x-auto py-1 px-1 snap-x hide-scrollbar" id="galleryThumbs">
+          <img src="../../assets/foto/pengantin_1.jpeg" onclick="setGallery(0)" class="w-16 h-16 rounded-lg object-cover cursor-pointer snap-start border-2 border-[var(--gold)] shrink-0 transition-all">
+          <img src="../../assets/foto/pengantin_2.jpeg" onclick="setGallery(1)" class="w-16 h-16 rounded-lg object-cover cursor-pointer snap-start opacity-60 shrink-0 transition-all hover:opacity-100">
+          <img src="../../assets/foto/pengantin_3.jpeg" onclick="setGallery(2)" class="w-16 h-16 rounded-lg object-cover cursor-pointer snap-start opacity-60 shrink-0 transition-all hover:opacity-100">
+          <img src="../../assets/foto/pengantin_1.jpeg" onclick="setGallery(3)" class="w-16 h-16 rounded-lg object-cover cursor-pointer snap-start opacity-60 shrink-0 transition-all hover:opacity-100">
+          <img src="../../assets/foto/pengantin_2.jpeg" onclick="setGallery(4)" class="w-16 h-16 rounded-lg object-cover cursor-pointer snap-start opacity-60 shrink-0 transition-all hover:opacity-100">
+          <img src="../../assets/foto/pengantin_3.jpeg" onclick="setGallery(5)" class="w-16 h-16 rounded-lg object-cover cursor-pointer snap-start opacity-60 shrink-0 transition-all hover:opacity-100">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WEDDING GIFT -->
+  <section id="kado" class="relative px-4 py-16 overflow-hidden">
+    <div class="corner-wrap corner-tr"><img src="../../assets/corner-gold.png" alt="" class="corner-img"></div>
+    
+    <div class="glass-panel w-full max-w-md mx-auto text-center px-6 py-16">
+      <p class="font-serif tracking-[0.35em] text-xs uppercase text-[var(--blue)] mb-2 reveal">Wedding Gift</p>
+      <h2 class="font-script text-5xl mb-4 reveal">Tanda Kasih</h2>
+      <p class="text-sm text-[var(--ink)]/60 mx-auto mb-12 reveal">Doa restu Anda adalah karunia paling berarti bagi kami. Namun jika ingin memberi tanda kasih, Anda dapat melalui rekening berikut.</p>
+
+      <div class="grid gap-6 text-left">
+        <div class="reveal border border-[var(--blue-soft)]/50 bg-white/30 rounded-xl p-6">
+          <p class="text-xs tracking-widest uppercase text-[var(--blue)] mb-2">Bank Mandiri</p>
+          <p class="font-serif text-2xl mb-1" id="rek1">1390029450909</p>
+          <p class="text-sm text-[var(--ink)]/60 mb-4">a.n. Ayu Lestari</p>
+          <button onclick="copyRek('rek1')" class="text-xs tracking-widest uppercase border-b border-[var(--ink)] pb-1">Salin Nomor</button>
+        </div>
+        <div class="reveal border border-[var(--blue-soft)]/50 bg-white/30 rounded-xl p-6">
+          <p class="text-xs tracking-widest uppercase text-[var(--blue)] mb-2">Bank BCA</p>
+          <p class="font-serif text-2xl mb-1" id="rek2">3620902399</p>
+          <p class="text-sm text-[var(--ink)]/60 mb-4">a.n. Ayu Lestari</p>
+          <button onclick="copyRek('rek2')" class="text-xs tracking-widest uppercase border-b border-[var(--ink)] pb-1">Salin Nomor</button>
+        </div>
+      </div>
+      <p id="copyToast" class="text-xs text-[var(--sage)] mt-4 h-4"></p>
+    </div>
+  </section>
+
+  <!-- UCAPAN & RSVP -->
+  <section id="ucapan" class="relative px-4 py-16 overflow-hidden">
+    <div class="corner-wrap corner-tl"><img src="../../assets/corner-gold.png" alt="" class="corner-img"></div>
+    <div class="corner-wrap corner-br"><img src="../../assets/corner-gold.png" alt="" class="corner-img"></div>
+    
+    <div class="glass-panel w-full max-w-md mx-auto text-center px-6 py-16">
+      <p class="font-serif tracking-[0.35em] text-xs uppercase text-[var(--blue)] mb-2 reveal">RSVP</p>
+      <h2 class="font-script text-5xl mb-10 reveal">Ucapan &amp; Doa</h2>
+
+      <form id="rsvpForm" class="text-left space-y-4 reveal border border-[var(--blue-soft)] rounded-2xl p-6 bg-white/30" onsubmit="return submitRsvp(event)">
+        <div>
+          <input required type="text" placeholder="Nama" class="w-full border border-[var(--blue-soft)] rounded-lg px-4 py-3 bg-white/70 text-sm focus:border-[var(--blue)] placeholder-[var(--ink)]/40">
+        </div>
+        <div>
+          <textarea required rows="3" placeholder="Ucapan" class="w-full border border-[var(--blue-soft)] rounded-lg px-4 py-3 bg-white/70 text-sm focus:border-[var(--blue)] placeholder-[var(--ink)]/40"></textarea>
+        </div>
+        
+        <div class="pt-2 pb-2">
+          <div class="flex items-center gap-4 mb-4">
+            <hr class="flex-grow border-[var(--blue-soft)]">
+            <span class="text-xs font-serif font-bold text-[var(--ink)]">Konfirmasi Kehadiran</span>
+            <hr class="flex-grow border-[var(--blue-soft)]">
+          </div>
+          
+          <div class="flex gap-3">
+            <label class="flex-1 relative">
+              <input type="radio" name="attendance" value="Hadir" required class="peer sr-only">
+              <div class="w-full text-center py-2.5 rounded-full bg-black/5 text-[var(--ink)]/50 text-sm font-semibold cursor-pointer peer-checked:bg-[var(--blue-soft)] peer-checked:text-[var(--ink)] transition-all flex items-center justify-center gap-1.5">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                Hadir
+              </div>
+            </label>
+            <label class="flex-1 relative">
+              <input type="radio" name="attendance" value="Tidak Hadir" class="peer sr-only">
+              <div class="w-full text-center py-2.5 rounded-full bg-black/5 text-[var(--ink)]/50 text-sm font-semibold cursor-pointer peer-checked:bg-gray-300 peer-checked:text-gray-700 transition-all flex items-center justify-center gap-1.5">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/></svg>
+                Tidak Hadir
+              </div>
+            </label>
+          </div>
+        </div>
+        <button type="submit" class="btn-primary w-full font-serif tracking-widest text-sm uppercase px-8 py-3 rounded-full shadow-sm">Kirim</button>
+        <p id="rsvpMsg" class="text-xs text-[var(--ink)] font-semibold text-center h-4"></p>
+      </form>
+
+      <div class="mt-14 relative">
+        <div id="ucapanList" class="space-y-4 text-left max-h-[360px] overflow-y-auto pr-2 hide-scrollbar">
+          <!-- Dummy Data -->
+          <div class="bg-white/80 p-4 rounded-xl shadow-sm border border-white flex gap-4">
+            <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-xs shrink-0 bg-[var(--blue-soft)] text-[var(--ink)]">ZA</div>
+            <div class="flex-1">
+              <p class="font-bold text-[13px] text-[var(--ink)] mb-0.5 flex items-center justify-between">
+                <span>Zaky</span>
+                <span class="text-[9px] bg-[var(--blue-soft)] text-[var(--ink)] px-2 py-0.5 rounded-full font-normal ml-2">Hadir</span>
+              </p>
+              <p class="text-[13px] text-[var(--ink)]/80 leading-relaxed">Selamat ya! Semoga lancar sampai hari H.</p>
+            </div>
+          </div>
+          <div class="bg-white/80 p-4 rounded-xl shadow-sm border border-white flex gap-4">
+            <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-xs shrink-0 bg-[var(--blue-soft)] text-[var(--ink)]">TO</div>
+            <div class="flex-1">
+              <p class="font-bold text-[13px] text-[var(--ink)] mb-0.5 flex items-center justify-between">
+                <span>Tobleg</span>
+                <span class="text-[9px] bg-[var(--blue-soft)] text-[var(--ink)] px-2 py-0.5 rounded-full font-normal ml-2">Hadir</span>
+              </p>
+              <p class="text-[13px] text-[var(--ink)]/80 leading-relaxed">Alhamdulillah titite payu.</p>
+            </div>
+          </div>
+          <div class="bg-white/80 p-4 rounded-xl shadow-sm border border-white flex gap-4">
+            <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-xs shrink-0 bg-gray-200 text-gray-500">TA</div>
+            <div class="flex-1">
+              <p class="font-bold text-[13px] text-[var(--ink)] mb-0.5 flex items-center justify-between">
+                <span>Tarisa</span>
+                <span class="text-[9px] bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full font-normal ml-2">Tidak Hadir</span>
+              </p>
+              <p class="text-[13px] text-[var(--ink)]/80 leading-relaxed">Maaf ga bisa dateng, ada acara keluarga. Selamat ya!</p>
+            </div>
+          </div>
+          <div class="bg-white/80 p-4 rounded-xl shadow-sm border border-white flex gap-4">
+            <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-xs shrink-0 bg-[var(--blue-soft)] text-[var(--ink)]">DL</div>
+            <div class="flex-1">
+              <p class="font-bold text-[13px] text-[var(--ink)] mb-0.5 flex items-center justify-between">
+                <span>Dimas Lujeng</span>
+                <span class="text-[9px] bg-[var(--blue-soft)] text-[var(--ink)] px-2 py-0.5 rounded-full font-normal ml-2">Hadir</span>
+              </p>
+              <p class="text-[13px] text-[var(--ink)]/80 leading-relaxed">Selamat menikah semoga jdi keluarga yng berbahagia selalu.</p>
+            </div>
+          </div>
+          <div class="bg-white/80 p-4 rounded-xl shadow-sm border border-white flex gap-4">
+            <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-xs shrink-0 bg-[var(--blue-soft)] text-[var(--ink)]">MU</div>
+            <div class="flex-1">
+              <p class="font-bold text-[13px] text-[var(--ink)] mb-0.5 flex items-center justify-between">
+                <span>Mutiara</span>
+                <span class="text-[9px] bg-[var(--blue-soft)] text-[var(--ink)] px-2 py-0.5 rounded-full font-normal ml-2">Hadir</span>
+              </p>
+              <p class="text-[13px] text-[var(--ink)]/80 leading-relaxed">waahh selamat yah dea, semoga lancar sampe hari H, bahagia selalu cantik 💕</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pagination UI -->
+        <div class="flex items-center justify-center gap-2 mt-6">
+          <button class="w-8 h-8 rounded-full flex items-center justify-center border border-[var(--blue-soft)] text-[var(--ink)] transition-all opacity-50 cursor-not-allowed">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 18l-6-6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="w-8 h-8 rounded-full flex items-center justify-center bg-[var(--ink)] text-white text-xs font-semibold">1</button>
+          <button class="w-8 h-8 rounded-full flex items-center justify-center border border-[var(--blue-soft)] text-[var(--ink)] hover:bg-[var(--blue-soft)]/20 transition-all text-xs font-semibold">2</button>
+          <button class="w-8 h-8 rounded-full flex items-center justify-center border border-[var(--blue-soft)] text-[var(--ink)] hover:bg-[var(--blue-soft)]/20 transition-all text-xs font-semibold">3</button>
+          <button class="w-8 h-8 rounded-full flex items-center justify-center border border-[var(--blue-soft)] text-[var(--ink)] hover:bg-[var(--blue-soft)]/20 transition-all">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 18l6-6-6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <section class="relative px-4 py-16 overflow-hidden">
+    <div class="corner-wrap corner-tl"><img src="../../assets/corner-gold.png" alt="" class="corner-img"></div>
+    <div class="corner-wrap corner-tr"><img src="../../assets/corner-gold.png" alt="" class="corner-img"></div>
+    
+    <div class="glass-panel w-full max-w-md mx-auto text-center px-6 py-16">
+      <p class="font-serif text-lg mx-auto text-[var(--ink)]/70 reveal">Merupakan suatu kebahagiaan dan kehormatan bagi kami, apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.</p>
+      <p class="font-serif text-lg text-[var(--ink)] font-semibold mt-6 mb-10 reveal">Wassalamu'alaikum Warahmatullahi Wabarakatuh</p>
+      <p class="text-xs tracking-widest uppercase text-[var(--blue)] mb-2 reveal">Kami Yang Berbahagia</p>
+      <h2 class="font-script text-6xl reveal">Ayu &amp; Bagas</h2>
+    </div>
+  </section>
+
+  <footer class="text-center py-8 border-t border-[var(--blue-soft)]">
+    <p class="text-[11px] tracking-widest uppercase text-[var(--ink)]/40">Made with love &middot; 2026</p>
+  </footer>
+</div>
+
+</div> <!-- End of #app-wrap -->
+
+<script>
+  // ---------- envelope open ----------
+  const params = new URLSearchParams(window.location.search);
+  const guest = params.get('to');
+  if(guest){ document.getElementById('guestName').textContent = decodeURIComponent(guest); }
+
+  document.getElementById('openBtn').addEventListener('click', () => {
+    document.getElementById('envelope').classList.add('closed-hide');
+    document.getElementById('main').classList.remove('hidden');
+    document.body.style.overflow = 'auto';
+    const audio = document.getElementById('bgAudio');
+    audio.play().catch(()=>{});
+    spawnPetals();
+  });
+  document.body.style.overflow = 'hidden';
+
+  // ---------- audio toggle ----------
+  const audio = document.getElementById('bgAudio');
+  const audioBtn = document.getElementById('audioBtn');
+  audioBtn.addEventListener('click', () => {
+    if(audio.paused){ audio.play(); audioBtn.classList.remove('opacity-40'); }
+    else { audio.pause(); audioBtn.classList.add('opacity-40'); }
+  });
+
+  // ---------- countdown ----------
+  const weddingDate = new Date('2026-06-04T08:00:00+07:00').getTime();
+  function updateCountdown(){
+    const now = new Date().getTime();
+    const dist = weddingDate - now;
+    if(dist < 0) return;
+    document.getElementById('cd-days').textContent = String(Math.floor(dist/(1000*60*60*24))).padStart(2,'0');
+    document.getElementById('cd-hours').textContent = String(Math.floor((dist%(1000*60*60*24))/(1000*60*60))).padStart(2,'0');
+    document.getElementById('cd-mins').textContent = String(Math.floor((dist%(1000*60*60))/(1000*60))).padStart(2,'0');
+    document.getElementById('cd-secs').textContent = String(Math.floor((dist%(1000*60))/1000)).padStart(2,'0');
+  }
+  setInterval(updateCountdown, 1000);
+  updateCountdown();
+
+  // ---------- add to calendar ----------
+  const calBtn = document.getElementById('calendarBtn');
+  const calText = encodeURIComponent('The Wedding of Ayu & Bagas');
+  const calDetails = encodeURIComponent('Akad Nikah & Resepsi Pernikahan Ayu & Bagas');
+  calBtn.href = `https://www.google.com/calendar/render?action=TEMPLATE&text=${calText}&details=${calDetails}&dates=20260604T010000Z/20260604T070000Z`;
+
+  // ---------- reveal on scroll ----------
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('show'); });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => observer.observe(el));
+
+  // ---------- copy rekening ----------
+  function copyRek(id){
+    const text = document.getElementById(id).textContent.trim();
+    navigator.clipboard.writeText(text).then(() => {
+      const toast = document.getElementById('copyToast');
+      toast.textContent = 'Nomor rekening disalin: ' + text;
+      setTimeout(() => toast.textContent = '', 2500);
+    });
+  }
+
+  // ---------- rsvp (client-side demo, no backend) ----------
+  const ucapanList = document.getElementById('ucapanList');
+  function submitRsvp(e){
+    e.preventDefault();
+    const form = e.target;
+    const name = form.querySelector('input[type="text"]').value;
+    const msg = form.querySelector('textarea').value;
+    const attend = form.querySelector('input[name="attendance"]:checked').value;
+    
+    const initials = name.split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase();
+    const avatarColor = (attend === 'Hadir') ? 'bg-[var(--blue-soft)] text-[var(--ink)]' : 'bg-gray-200 text-gray-500';
+    const badge = (attend === 'Hadir') 
+      ? '<span class="text-[9px] bg-[var(--blue-soft)] text-[var(--ink)] px-2 py-0.5 rounded-full font-normal ml-2 inline-block">Hadir</span>'
+      : '<span class="text-[9px] bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full font-normal ml-2 inline-block">Tidak Hadir</span>';
+    
+    const item = document.createElement('div');
+    item.className = 'bg-white/80 p-4 rounded-xl shadow-sm border border-white flex gap-4 reveal show';
+    item.innerHTML = `
+      <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-xs shrink-0 ${avatarColor}">${initials}</div>
+      <div class="flex-1">
+        <p class="font-bold text-[13px] text-[var(--ink)] mb-0.5 flex items-center justify-between">
+          <span>${name}</span>
+          ${badge}
+        </p>
+        <p class="text-[13px] text-[var(--ink)]/80 leading-relaxed">${msg}</p>
+      </div>
+    `;
+    ucapanList.prepend(item);
+    document.getElementById('rsvpMsg').textContent = 'Terima kasih atas doa & konfirmasinya!';
+    form.reset();
+    setTimeout(()=> document.getElementById('rsvpMsg').textContent = '', 3000);
+    return false;
+  }
+
+  // ---------- floating petals ----------
+  function spawnPetals(){
+    const container = document.getElementById('petals');
+    const colors = ['#b76e79', '#C7A662', '#e0bfb8'];
+    for(let i=0;i<15;i++){
+      const p = document.createElement('div');
+      p.className = 'petal';
+      p.style.left = Math.random()*100+'%';
+      p.style.width = (10+Math.random()*14)+'px';
+      p.style.animationDuration = (10+Math.random()*10)+'s';
+      p.style.animationDelay = (Math.random()*10)+'s';
+      const fillCol = colors[Math.floor(Math.random() * colors.length)];
+      p.innerHTML = `<svg viewBox="0 0 24 24" fill="${fillCol}"><path d="M12 2c3 3 3 7 0 10-3-3-3-7 0-10z"/></svg>`;
+      container.appendChild(p);
+    }
+  }
+
+  // ---------- scroll spy for dot nav ----------
+  const navDots = document.querySelectorAll('[data-nav]');
+  window.addEventListener('scroll', () => {
+    let currentId = '';
+    const scrollPos = window.scrollY;
+    const viewportHeight = window.innerHeight;
+    
+    document.querySelectorAll('section[id]').forEach((s) => {
+      if(scrollPos >= s.offsetTop - viewportHeight/2) {
+        currentId = s.id;
+      }
+    });
+
+    navDots.forEach(d => {
+      d.classList.toggle('active', d.getAttribute('href') === '#' + currentId);
+    });
+  });
+
+  // ---------- gallery carousel ----------
+  const galleryImages = ['../../assets/foto/pengantin_1.jpeg','../../assets/foto/pengantin_2.jpeg','../../assets/foto/pengantin_3.jpeg','../../assets/foto/pengantin_1.jpeg','../../assets/foto/pengantin_2.jpeg','../../assets/foto/pengantin_3.jpeg'];
+  let currentGalIdx = 0;
+  const mainImg = document.getElementById('mainGalleryImg');
+  const thumbs = document.getElementById('galleryThumbs').children;
+
+  function updateGallery(){
+    mainImg.src = galleryImages[currentGalIdx];
+    Array.from(thumbs).forEach((t, i) => {
+      if(i === currentGalIdx){
+        t.classList.add('border-2', 'border-[var(--gold)]');
+        t.classList.remove('opacity-60');
+      } else {
+        t.classList.remove('border-2', 'border-[var(--gold)]');
+        t.classList.add('opacity-60');
+      }
+    });
+    const container = document.getElementById('galleryThumbs');
+    const thumb = thumbs[currentGalIdx];
+    const targetLeft = thumb.offsetLeft - (container.clientWidth / 2) + (thumb.clientWidth / 2);
+    container.scrollTo({ left: targetLeft, behavior: 'smooth' });
+  }
+  function nextGallery(){ currentGalIdx = (currentGalIdx + 1) % galleryImages.length; updateGallery(); }
+  function prevGallery(){ currentGalIdx = (currentGalIdx - 1 + galleryImages.length) % galleryImages.length; updateGallery(); }
+  function setGallery(idx){ currentGalIdx = idx; updateGallery(); }
+</script>
+</body>
+</html>
